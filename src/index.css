@@ -37,7 +37,7 @@
 
 /* #E7F2E6 */
 .ant-modal .ant-modal-content {
-  background-color: #B0E3D3;
+  background-color:#E6F6F1;
   /* border: 2px solid #FA1131; */
   padding: 0px;
 }
@@ -45,15 +45,14 @@
 .ant-modal .ant-modal-close {
   color: white;
   font-weight: bold;
-  background-color:  #00A572;
+  background-color:#E6F6F1;
 
 }
 
 .ant-modal .ant-modal-close:hover {
-  color: white;
+  color: rgb(31, 4, 4);
   font-weight: bold;
-  background-color: 
-  #00A572;
+  background-color:#E6F6F1;
 } 
 
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover{

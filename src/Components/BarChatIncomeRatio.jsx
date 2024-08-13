@@ -1,69 +1,67 @@
 import { DatePicker } from "antd";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
-
-
 const BarChartIncomeRatio = () => {
-//   const [year,setYear ] = useState('2024');
-//   const {data:chart,isError,isLoading,isSuccess} = useGetChartQuery(year);
-//   if(isLoading){
-//     return <Loading/>
-//   }
-const chart = [
+  //   const [year,setYear ] = useState('2024');
+  //   const {data:chart,isError,isLoading,isSuccess} = useGetChartQuery(year);
+  //   if(isLoading){
+  //     return <Loading/>
+  //   }
+  const chart = [
     {
-        "name": "Jan",
-        "price": 500
+      name: "Jan",
+      price: 500,
     },
     {
-        "name": "Feb",
-        "price": 700
+      name: "Feb",
+      price: 700,
     },
     {
-        "name": "Mar",
-        "price": 40
+      name: "Mar",
+      price: 40,
     },
     {
-        "name": "Apr",
-        "price": 900
+      name: "Apr",
+      price: 900,
     },
     {
-        "name": "May",
-        "price": 672
+      name: "May",
+      price: 672,
     },
     {
-        "name": "Jun",
-        "price": 300
+      name: "Jun",
+      price: 300,
     },
     {
-        "name": "Jul",
-        "price": 800
+      name: "Jul",
+      price: 800,
     },
     {
-        "name": "Aug",
-        "price": 400
+      name: "Aug",
+      price: 400,
     },
     {
-        "name": "Sep",
-        "price": 250
+      name: "Sep",
+      price: 250,
     },
     {
-        "name": "Oct",
-        "price": 710
+      name: "Oct",
+      price: 710,
     },
     {
-        "name": "Nov",
-        "price": 310
+      name: "Nov",
+      price: 310,
     },
     {
-        "name": "Dec",
-        "price": 840
-    }
-]
+      name: "Dec",
+      price: 840,
+    },
+  ];
   const onChange = (date, dateString) => {
     console.log(dateString);
     // setYear(dateString)
   };
- console.log(chart);
+  console.log(chart);
   return (
     <div className="bg-primary w-full   h-[318px] mt-5 rounded-xl border-2 shadow-xl ">
       <div className="flex justify-between p-[16px]">
@@ -89,12 +87,13 @@ const chart = [
           />
         </div>
       </div>
-      <div>
+      <div className="overflow-x-auto">
         <BarChart
+          //  width={Math.max(window.innerWidth - 20, 1500)}
           width={1500}
           height={250}
-        //   data={chart?.data?.attributes}
-        data={chart}
+          //   data={chart?.data?.attributes}
+          data={chart}
           margin={{
             top: 5,
             right: 30,

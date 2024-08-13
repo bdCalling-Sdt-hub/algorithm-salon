@@ -227,7 +227,7 @@ const Settings = () => {
         title={
           <div
             onClick={() => setIsModalOpen(false)}
-            className=" bg-primary items-center cursor-pointer text-black px-[60px] pt-[60px]"
+            className=" bg-primary items-center cursor-pointer text-black px-[60px] "
           >
             {/* <div style={{fontFamily:'Aldrich'}} className="flex justify-center items-center gap-2 flex-col border-b border-b-gray-300">
           <img className="w-[140px] h-[140px] rounded-full" src={user?.img} alt="" />

@@ -18,7 +18,6 @@ import Swal from "sweetalert2";
 const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogOut = () => {
-    
     // Swal.fire({
     //   title: "Do you want to Logout from here?",
     //   showDenyButton: true,
@@ -41,8 +40,8 @@ const Sidebar = () => {
   return (
     <div className="w-[350px] flex flex-col text-primary justify-between bg-secondary min-h-screen rounded-lg border-2 ">
       <div className="">
-        <div className="p-[32px]">
-          <img className="w-[150px] mx-auto" src={logo} alt="" />
+        <div className="pt-[10px]">
+          <img className="w-[120px] mx-auto" src={logo} alt="" />
         </div>
         <div className="">
           <ul>
@@ -51,10 +50,10 @@ const Sidebar = () => {
                 to="/"
                 className={({ isActive, isPending }) =>
                   isPending
-                    ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#281F1F] m-[16px] rounded-lg"
+                    ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
                     : isActive
-                    ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] bg-primary  m-[16px] rounded-lg "
-                    : "flex text-white gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] m-[16px] rounded-lg"
+                    ? "flex text-secondary gap-2 cursor-pointer items-center text-[22px] font-medium p-[10px] bg-primary m-[16px] rounded-lg "
+                    : "flex text-white gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] m-[16px] rounded-lg"
                 }
               >
                 <div className="flex justify-start items-center gap-2">
@@ -66,15 +65,15 @@ const Sidebar = () => {
               to="/earnings"
               className={({ isActive, isPending }) =>
                 isPending
-                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#281F1F] m-[16px] rounded-lg"
+                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
                   : isActive
-                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] bg-primary  m-[16px] rounded-lg"
-                  : "flex  gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px]  m-[16px] rounded-lg"
+                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] bg-primary  m-[16px] rounded-lg"
+                  : "flex  gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px]  m-[16px] rounded-lg"
               }
             >
               <div className="flex justify-start items-center gap-2">
-              <RiCurrencyLine  width={25} height={25}/>
-              Earnings
+                <RiCurrencyLine width={25} height={25} />
+                Earnings
               </div>
             </NavLink>
 
@@ -82,10 +81,10 @@ const Sidebar = () => {
               to="/users"
               className={({ isActive, isPending }) =>
                 isPending
-                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#281F1F] m-[16px] rounded-lg"
+                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
                   : isActive
-                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] bg-primary  m-[16px] rounded-lg"
-                  : "flex  gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px]  m-[16px] rounded-lg"
+                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] bg-primary  m-[16px] rounded-lg"
+                  : "flex  gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px]  m-[16px] rounded-lg"
               }
             >
               <div className="flex justify-start items-center gap-2">
@@ -94,22 +93,18 @@ const Sidebar = () => {
               </div>
             </NavLink>
 
-           
-
-           
-
             <NavLink
               to="/salon-owner"
               className={({ isActive, isPending }) =>
                 isPending
-                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#281F1F] m-[16px] rounded-lg"
+                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
                   : isActive
-                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] bg-primary  m-[16px] rounded-lg"
-                  : "flex  gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px]  m-[16px] rounded-lg"
+                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] bg-primary  m-[16px] rounded-lg"
+                  : "flex  gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px]  m-[16px] rounded-lg"
               }
             >
               <div className="flex justify-start items-center gap-2">
-              <HiOutlineDocumentAdd width={25} height={25} />
+                <HiOutlineDocumentAdd width={25} height={25} />
                 Salon Owner
               </div>
             </NavLink>
@@ -117,15 +112,15 @@ const Sidebar = () => {
               to="/subscription"
               className={({ isActive, isPending }) =>
                 isPending
-                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[28px] font-medium p-[20px] bg-[#281F1F] m-[16px] rounded-lg"
+                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[28px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
                   : isActive
-                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] bg-primary  m-[16px] rounded-lg"
-                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[20px]  m-[16px] rounded-lg"
+                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] bg-primary  m-[16px] rounded-lg"
+                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[10px]  m-[16px] rounded-lg"
               }
             >
               <div className="flex justify-start items-center gap-2">
-              <HiOutlineBars4 width={25} height={25} />
-              Subscription
+                <HiOutlineBars4 width={25} height={25} />
+                Subscription
               </div>
             </NavLink>
 
@@ -133,15 +128,15 @@ const Sidebar = () => {
               to="/poster"
               className={({ isActive, isPending }) =>
                 isPending
-                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[28px] font-medium p-[20px] bg-[#281F1F] m-[16px] rounded-lg"
+                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[28px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
                   : isActive
-                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] bg-primary  m-[16px] rounded-lg"
-                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[20px]  m-[16px] rounded-lg"
+                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] bg-primary  m-[16px] rounded-lg"
+                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[10px]  m-[16px] rounded-lg"
               }
             >
               <div className="flex justify-start items-center gap-2">
-              <RiExchangeDollarLine width={35} height={35} />
-              Poster
+                <RiExchangeDollarLine width={35} height={35} />
+                Poster
               </div>
             </NavLink>
 
@@ -149,15 +144,31 @@ const Sidebar = () => {
               to="/reg-requests"
               className={({ isActive, isPending }) =>
                 isPending
-                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[28px] font-medium p-[20px] bg-[#281F1F] m-[16px] rounded-lg"
+                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[28px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
                   : isActive
-                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] bg-primary  m-[16px] rounded-lg"
-                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[20px]  m-[16px] rounded-lg"
+                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] bg-primary  m-[16px] rounded-lg"
+                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[10px]  m-[16px] rounded-lg"
               }
             >
               <div className="flex justify-start items-center gap-2">
-              <RiExchangeDollarLine width={35} height={35} />
-              Reg requests
+                <RiExchangeDollarLine width={35} height={35} />
+                Reg requests
+              </div>
+            </NavLink>
+
+            <NavLink
+              to="/help"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[28px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
+                  : isActive
+                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] bg-primary  m-[16px] rounded-lg"
+                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[10px]  m-[16px] rounded-lg"
+              }
+            >
+              <div className="flex justify-start items-center gap-2">
+                <RiExchangeDollarLine width={35} height={35} />
+                Help
               </div>
             </NavLink>
 
@@ -165,14 +176,15 @@ const Sidebar = () => {
               to="/settings"
               className={({ isActive, isPending }) =>
                 isPending
-                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[20px] bg-[#281F1F] m-[16px] rounded-lg"
+                  ? "flex text-[white] gap-2 cursor-pointer items-center text-[18px] font-medium p-[10px] bg-[#281F1F] m-[16px] rounded-lg"
                   : isActive
-                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[20px] bg-primary  m-[16px] rounded-lg"
-                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[20px]  m-[16px] rounded-lg"
+                  ? "flex text-secondary gap-2 cursor-pointer items-center  text-[22px] font-medium p-[10px] bg-primary  m-[16px] rounded-lg"
+                  : "flex  gap-2 cursor-pointer items-center text-[22px] font-medium p-[10px]  m-[16px] rounded-lg"
               }
             >
               <div className="flex justify-start items-center gap-2">
-                <CiSettings width={25} height={25} /> <span className="flex-1">Settings</span>
+                <CiSettings width={25} height={25} />{" "}
+                <span className="flex-1">Settings</span>
               </div>
             </NavLink>
           </ul>

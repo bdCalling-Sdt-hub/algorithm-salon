@@ -44,6 +44,8 @@ import SplashScreenPoster from "../pages/Main/SplashScreenPoster/SplashScreenPos
 import AddSplashScreenPoster from "../pages/Main/SplashScreenPoster/AddSplashScreenPoster";
 import RegRequests from "../pages/Main/RegRequests/RegRequests";
 import RequestDetails from "../pages/Main/RegRequests/RequestDetails";
+import Help from "../pages/Main/Help/Help";
+import AddHelp from "../pages/Main/Help/AddHelp";
 
 const router = createBrowserRouter([
     {
@@ -150,6 +152,14 @@ const router = createBrowserRouter([
               {
                 path: "/poster",
                 element: <Poster/>,
+              },
+              {
+                path: "/help",
+                element: <Help/>,
+              },
+              {
+                path: "/help/add-help",
+                element: <AddHelp/>,
               },
               {
                 path: "/settings",

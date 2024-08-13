@@ -5,8 +5,8 @@ import Header from "./Header";
 
 const Main = () => {
   return (
-    <div className="flex bg-bgColor p-[32px] min-h-screen">
-      <div className="fixed top-3 left-3 h-[90%]">
+    <div className="bg-bgColor p-[32px] min-h-screen">
+      <div className="fixed top-3 left-3 h-[80%]">
       <Sidebar />
       </div>
      
