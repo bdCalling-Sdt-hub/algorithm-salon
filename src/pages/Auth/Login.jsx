@@ -6,48 +6,48 @@ import logo from "../../assets/logo.png";
 import baseURL from "../../config";
 import Swal from "sweetalert2";
 import { IconLock } from "@tabler/icons-react";
+import { useLoginMutation } from "../../redux/user/userApi";
+import { useEffect } from "react";
 
 const Login = () => {
+  const [login, { isLoading, isError, isSuccess }] = useLoginMutation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const isTokenExist = localStorage.getItem("token");
+    
+    if (isTokenExist) {
+      navigate("/");
+    } else {
+      navigate("/auth");
+    }
+  }, []);
   const onFinish = async ({ email, password }) => {
-    // console.log(values);
-    // try {
-    //   const response = await baseURL.post(
-    //     `/user/sign-in`,
-    //     { email, password, loginType:3 },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         authentication: `Bearer ${localStorage.getItem("token")}`,
-    //       },
-    //     }
-    //   );
-    //   console.log(response);
-    //   if (response?.data?.statusCode == 200) {
-    //     localStorage.setItem("token", response?.data?.data?.token);
-    //     localStorage.setItem(
-    //       "user-update",
-    //       JSON.stringify(response?.data?.data?.attributes)
-    //     );
-    //   }
-    //   Swal.fire({
-    //     position: "top-center",
-    //     icon: "success",
-    //     title: response?.data?.message,
-    //     showConfirmButton: false,
-    //     timer: 1500,
-    //   });
-    //   navigate("/");
-    // } catch (error) {
-    //   console.log(error);
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Try Again...",
-    //     text: error?.response?.data?.message,
-    //     footer: '<a href="#">Why do I have this issue?</a>',
-    //   });
-    // }
-    navigate("/");
+    login({ email, password })
+      .then((res) => {
+        console.log(res);
+        if (res.data) {
+          localStorage.setItem("token", res.data.token);
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Logged in successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Try Again...",
+          text: error.message,
+          footer: '<a href="#">Why do I have this issue?</a>',
+        });
+      });
+  
   };
   return (
     <div className=" bg-primary px-[100px] py-[40px] rounded-xl border-2 border-secondary">

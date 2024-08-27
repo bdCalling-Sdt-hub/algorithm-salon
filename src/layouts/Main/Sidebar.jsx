@@ -18,22 +18,23 @@ import Swal from "sweetalert2";
 const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogOut = () => {
-    // Swal.fire({
-    //   title: "Do you want to Logout from here?",
-    //   showDenyButton: true,
-    //   showCancelButton: false,
-    //   confirmButtonText: "Yes",
-    //   denyButtonText: `No`,
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     localStorage.removeItem("token");
-    //     localStorage.removeItem("user-update");
 
-    //     navigate("/auth");
-    //   } else if (result.isDenied) {
-    //     Swal.fire("Ok", "", "info");
-    //   }
-    // });
+
+    Swal.fire({
+      title: "Do you want to Logout from here?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Yes",
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user-Info");
+        navigate("/auth");
+      } else if (result.isDenied) {
+        Swal.fire("Ok", "", "info");
+      }
+    });
 
     navigate("/auth");
   };
@@ -196,7 +197,7 @@ const Sidebar = () => {
           className="flex items-center ml-[18px] cursor-pointer gap-2 text-[red] font-medium"
         >
           <HiLogout width={25} height={25} />
-          <span className="text-[20px] ">Log Out</span>
+          <span className="text-[20px] " onClick={handleLogOut}>Log Out</span>
         </div>
         {/* <Link to="/" className="flex items-center ml-[18px] cursor-pointer gap-2 text-[#3BA6F6] font-medium">
             
