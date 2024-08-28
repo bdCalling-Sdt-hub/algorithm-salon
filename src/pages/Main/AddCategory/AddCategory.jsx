@@ -4,15 +4,48 @@ import React, { useRef, useState } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { useAddSubscriptionMutation } from "../../../redux/subscription/subscriptionApi";
+import Swal from "sweetalert2";
 
 const AddCategory = () => {
   const navigate = useNavigate();
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [addSubscription,{isLoading,isError}]=useAddSubscriptionMutation()
 
   const handleUploadScore = (values) => {
-    // console.log(values);
+    const { packageName, packageAmount, duration, features = [], tagCount } = values;
+    const newFeatures = features?.map((item) => ({ title: item }));
+    const subscription={
+      type:packageName,
+      amount:parseFloat(packageAmount),
+      expirationLapse:parseFloat(duration),
+      features:newFeatures,
+      tagCount:parseFloat(tagCount)
+    }
+    // console.log(subscription)
+    addSubscription(subscription)
+    .then((res) => {
+      if (res.data) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Try Again...",
+        text: error.message,
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+    });
   };
 
   const handleFileChange = (event) => {
@@ -21,10 +54,7 @@ const AddCategory = () => {
   return (
     <div className="ml-[24px] overflow-auto">
       <div className="mt-[44px] cursor-pointer flex items-center pb-3 gap-2">
-        <MdOutlineKeyboardArrowLeft
-          onClick={() => navigate(-1)}
-          size={34}
-        />
+        <MdOutlineKeyboardArrowLeft onClick={() => navigate(-1)} size={34} />
         <h1 className="text-[24px] text-textColor font-semibold">
           Add New Subscription
         </h1>
@@ -36,7 +66,7 @@ const AddCategory = () => {
           wrapperCol={{ span: 40 }}
           layout="vertical"
           initialValues={{
-           feature: ["",""],
+            feature: ["", ""],
           }}
           onFinish={handleUploadScore}
           //   onFinishFailed={handleCompanyInformationFailed}
@@ -126,7 +156,21 @@ const AddCategory = () => {
               items-center 
               gap-4 inline-flex focus:bg-primary hover:bg-primary focus:border-secondary hover:border-secondary"
               />
+
+          
             </Form.Item>
+            <Form.Item
+                name="tagCount"
+                label={
+                  <span className="text-textColor text-[18px] ">Tag Count</span>
+                }
+                className="flex-1"
+              >
+                <Input
+                  placeholder="Tag Count"
+                  className="p-4 bg-primary rounded w-full border-2 border-secondary mt-[12px]"
+                />
+              </Form.Item>
           </div>
 
           <div className="flex-1">
@@ -148,7 +192,6 @@ const AddCategory = () => {
                   },
                 },
               ]}
-              
             >
               {(fields, { add, remove }, { errors }) => (
                 <>
@@ -202,7 +245,7 @@ const AddCategory = () => {
                       icon={<PlusOutlined />}
                       className="block w-[500px] h-[56px] mt-[30px] px-2 py-4 text-text bg-primary"
                     >
-                       Add Feature
+                      Add Feature
                     </Button>
                   </Form.Item>
                 </>

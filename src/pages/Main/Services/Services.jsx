@@ -7,6 +7,7 @@ import ServicesCart from '../../../Components/SubscriptionCart';
 const Services = () => {
     const navigate = useNavigate();
     return (
+        <>
         <div>
             <div className="flex justify-between items-center">
         <p className=" text-[24px]">Services</p>
@@ -39,6 +40,8 @@ const Services = () => {
                 <ServicesCart/>
             </div>
         </div>
+ 
+       </>
     );
 }
 

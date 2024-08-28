@@ -11,9 +11,10 @@ import Loading from "../utils/Loading";
 const FullRecentTransaction = () => {
     const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [queryString,setQueryString]=useState("limit=2&page=0")
   const [user, setUser] = useState();
   const myRef=useRef()
-  const { data, isLoading } = useGetTransectionsQuery();
+  const { data, isLoading } = useGetTransectionsQuery(queryString);
   const handlePrint = useReactToPrint({
     content: () => myRef.current,
   });
@@ -65,6 +66,14 @@ const FullRecentTransaction = () => {
       ),
     },
   ];
+
+  const handleChangePage=(page)=>{
+    setQueryString(`limit=2&page=${page-1}`)
+    setCurrentPage(page)
+    // console.log(page);
+    
+  }
+  console.log(queryString)
     return (
         
         <div>
@@ -98,10 +107,10 @@ const FullRecentTransaction = () => {
           pagination={{
             position: ["bottomCenter"],
             current: currentPage,
-              pageSize:5,
+              pageSize:2,
               total:data?.data?.count,
               // showSizeChanger: false,
-            //   onChange: handleChangePage,
+              onChange: handleChangePage,
           }}
         
           columns={columns}

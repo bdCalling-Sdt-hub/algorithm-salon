@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import { BsInfoCircle } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
+import { useGetAllUsersQuery } from "../../../redux/user/userApi";
+import Loading from "../../../utils/Loading";
+import { format } from "date-fns";
 
 const SalonOwner = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [queryString, setQueryString] = useState(`role=SalonOwner&limit=10&page=0&verified=true`);
     const [user, setUser] = useState();
+    const { data, isLoading } = useGetAllUsersQuery(queryString);
   
     const dataSource = [
       {
@@ -113,6 +118,9 @@ const SalonOwner = () => {
         },
     ];
   
+    if(isLoading){
+      return <Loading/>
+    }
     const handleView = (record) => {
       setUser(record);
       setIsModalOpen(true);
@@ -133,17 +141,21 @@ const SalonOwner = () => {
       {
         title: 'Email',
         dataIndex: 'email',
-        key: 'providerName',
+        key: 'email',
       },
       {
         title: "Subscription Status",
-        dataIndex: "subscription",
-        key: "phoneNumber",
+        dataIndex: "isSubscribed",
+        key: "isSubscribed",
+        render: (_,record) => record?.isSubscribed ? "subscribed" : "N/A",
       },
       {
         title: "Join Date",
-        dataIndex: "date",
-        key: "date",
+        dataIndex: "createdAt",
+        key: "createdAt",
+        render: (_, record) => {
+          return format(new Date(record.createdAt), "PP");
+        },
         
       },
       
@@ -160,6 +172,10 @@ const SalonOwner = () => {
         ),
       },
     ];
+    const handleChangePage=(page)=>{
+      setQueryString(`role=SalonOwner&limit=10&page=${page-1}&verified=true`)
+      setCurrentPage(page)
+    }
       return (
           <div>
           <div className="flex justify-between items-center">
@@ -192,15 +208,15 @@ const SalonOwner = () => {
             pagination={{
               position: ["bottomCenter"],
               current: currentPage,
-                // pageSize:10,
+                pageSize:10,
                 // total:usersAll?.pagination?.Users,
                 // showSizeChanger: false,
-              //   onChange: handleChangePage,
+                onChange: handleChangePage,
             }}
           // pagination={false}
             columns={columns}
             // dataSource={usersAll?.data?.attributes}
-            dataSource={dataSource}
+            dataSource={data?.data?.user}
   
           />
           </ConfigProvider>

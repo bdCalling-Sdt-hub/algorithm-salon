@@ -9,7 +9,7 @@ import { format } from "date-fns";
 
 const AllUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [queryString, setQueryString] = useState(`role=User`);
+  const [queryString, setQueryString] = useState(`role=User&limit=10&page=0`);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, isLoading } = useGetAllUsersQuery(queryString);
   const [user, setUser] = useState();
@@ -22,7 +22,7 @@ const AllUser = () => {
     setUser(record);
     setIsModalOpen(true);
   };
-  console.log(data?.data?.user)
+  // console.log(data?.data?.user)
 
   const columns = [
     {
@@ -47,7 +47,6 @@ const AllUser = () => {
       dataIndex: "createdAt",
       key: "createdAt",
       render: (_, record) => {
-        console.log(record);
         return format(new Date(record.createdAt), "PP");
       },
     },
@@ -65,11 +64,13 @@ const AllUser = () => {
       ),
     },
   ];
-  const handleChangePage=(page)=>{
-    // let previousPage=parseFloat(page)-1
-    setQueryString(`role=User&page=${page}`)
-    // setCurrentPage()
-  }
+
+    const handleChangePage=(page)=>{
+      setQueryString(`role=User&limit=10&page=${page-1}`)
+      setCurrentPage(page)
+    }
+
+  
   return (
     <div>
       <div className="flex justify-between items-center">

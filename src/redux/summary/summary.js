@@ -9,7 +9,7 @@ export const summaryApiSlice = baseApi.injectEndpoints({
         query: (year) => `/user/analytics?year=${year}`,
     }),
     getTransections:builder.query({
-        query: () => `/subscribedPlan/transections`,
+        query: (query) => `/subscribedPlan/transections?${query}`,
     }),
   }),
 });
