@@ -8,20 +8,22 @@ import Swal from "sweetalert2";
 import { IconLock } from "@tabler/icons-react";
 import { useLoginMutation } from "../../redux/user/userApi";
 import { useEffect } from "react";
+import ApiErrorAlert from "../../utils/ApiErrorAlert"
 
 const Login = () => {
-  const [login, { isLoading, isError, isSuccess }] = useLoginMutation();
+  const [login, { isLoading, isError, isSuccess, error }] = useLoginMutation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const isTokenExist = localStorage.getItem("token");
-    
+
     if (isTokenExist) {
       navigate("/");
     } else {
       navigate("/auth");
     }
   }, []);
+
   const onFinish = async ({ email, password }) => {
     login({ email, password })
       .then((res) => {
@@ -47,7 +49,6 @@ const Login = () => {
           footer: '<a href="#">Why do I have this issue?</a>',
         });
       });
-  
   };
   return (
     <div className=" bg-primary px-[100px] py-[40px] rounded-xl border-2 border-secondary">
@@ -160,20 +161,42 @@ const Login = () => {
             </div>
             <div></div>
 
+            {/* <ApiErrorAlert
+              isError={isError}
+              errorMessage={error?.data?.message}
+            /> */}
+            {isError && <h1 className="text-red-500">** {error?.data?.message}</h1>}
             <Form.Item>
-              <Button
-                type="default"
-                // style={{
-                //   backgroundColor: "#95C343",
-                //   color: "#fff",
-                //   size: "18px",
-                //   height: "56px",
-                // }}
-                htmlType="submit"
-                className="block w-[500px] hover:bg-secondary h-[56px] px-2 py-4 mt-2 text-white bg-secondary rounded-lg"
-              >
-                Log in
-              </Button>
+              {isLoading ? (
+                <Button
+                  type="default"
+                  // style={{
+                  //   backgroundColor: "#95C343",
+                  //   color: "#fff",
+                  //   size: "18px",
+                  //   height: "56px",
+                  // }}
+                  loading
+                  htmlType="submit"
+                  className="block w-[500px] hover:bg-secondary h-[56px] px-2 py-4 mt-2 text-white bg-secondary rounded-lg"
+                >
+                  Log in
+                </Button>
+              ) : (
+                <Button
+                  type="default"
+                  // style={{
+                  //   backgroundColor: "#95C343",
+                  //   color: "#fff",
+                  //   size: "18px",
+                  //   height: "56px",
+                  // }}
+                  htmlType="submit"
+                  className="block w-[500px] hover:bg-secondary h-[56px] px-2 py-4 mt-2 text-white bg-secondary rounded-lg"
+                >
+                  Log in
+                </Button>
+              )}
               {/* <Link to="/dashboard"
               // type="primary"
               // htmlType="submit"

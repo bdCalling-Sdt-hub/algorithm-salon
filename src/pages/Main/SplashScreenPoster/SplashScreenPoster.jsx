@@ -3,9 +3,19 @@ import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import PosterCart from "../../../Components/PosterCart";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import Loading from "../../../utils/Loading"
+import { useGetAllSplashPostersQuery } from "../../../redux/poster/posterApi";
+import { space } from "postcss/lib/list";
 
 const SplashScreenPoster = () => {
   const navigate = useNavigate();
+  const {data,isLoading,isError,error,refetch}=useGetAllSplashPostersQuery(undefined,{
+    refetchOnMountOrArgChange:true
+  })
+
+  if(isLoading){
+    return <Loading/>
+  }
   const service = [
     {
       id: 1,
@@ -43,9 +53,10 @@ const SplashScreenPoster = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 my-4 ">
+        {data?.data?.map(splashPoster=><PosterCart key={splashPoster._id} data={splashPoster} />)}
+        {/* <PosterCart />
         <PosterCart />
-        <PosterCart />
-        <PosterCart />
+        <PosterCart /> */}
       </div>
     </div>
   );

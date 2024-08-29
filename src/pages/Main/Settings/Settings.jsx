@@ -16,12 +16,16 @@ import { GoArrowLeft } from "react-icons/go";
 import { HiOutlineMailOpen } from "react-icons/hi";
 // import baseURL from "../../../config";
 import Swal from "sweetalert2";
+import { constructNow } from "date-fns";
+import ErrorBoundary from "antd/es/alert/ErrorBoundary";
+import { useChangePasswordMutation } from "../../../redux/user/userApi";
 
 const Settings = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modelTitle, setModelTitle] = useState("");
   const [otp, setOtp] = useState("");
+  const [changePassword, { isError ,error}] = useChangePasswordMutation();
   const [email, setEmail] = useState("");
   const [form] = Form.useForm();
   const onChange = (checked) => {
@@ -78,27 +82,19 @@ const Settings = () => {
 
   const handleChangePassword = async (values) => {
     const { newPassword, oldPassword } = values;
-    try {
-      const response = await baseURL.post(
-        `/user/change-password`,
-        { oldPassword, newPassword },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authentication: `Bearer ${localStorage.getItem("token")}`,
-          },
+    changePassword(values)
+      .then((res) => {
+        if (res.data) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: res.data.message || "Password Updated",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
-      );
-      console.log(response);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Try Again...",
-        text: error?.response?.data?.message,
-        footer: '<a href="#">Why do I have this issue?</a>',
-      });
-    }
-    console.log(values);
+      })
+  
   };
 
   const handleVerifyOtp = async (e) => {
@@ -145,6 +141,7 @@ const Settings = () => {
     setModelTitle("Reset Password");
   };
 
+  console.log(error)
   const handleResetPassword = async (values) => {
     console.log(values, email);
     const data = { email: email, password: values?.password };
@@ -231,15 +228,10 @@ const Settings = () => {
           >
             {/* <div style={{fontFamily:'Aldrich'}} className="flex justify-center items-center gap-2 flex-col border-b border-b-gray-300">
           <img className="w-[140px] h-[140px] rounded-full" src={user?.img} alt="" />
-          <p className="text-white text-[16px] mb-[16px]">{user?.name}</p>
+          <p className=" text-[16px] mb-[16px]">{user?.name}</p>
         </div> */}
-        <img
-                className="mx-auto"
-                src={logo}
-                alt=""
-              />
+            <img className="mx-auto" src={logo} alt="" />
             <div className="flex flex-col">
-              
               <div className="flex items-center justify-start gap-2">
                 <Link to="/settings">
                   {" "}
@@ -300,7 +292,7 @@ const Settings = () => {
                     border-2 border-secondary
                     justify-start 
                     mt-[12px]
-                    text-white 
+                     
                      outline-none focus:border-none "
                 />
               </Form.Item>
@@ -330,7 +322,7 @@ const Settings = () => {
                     border-2 border-secondary
                     justify-start 
                     mt-[12px]
-                    text-white 
+                     
                      outline-none focus:border-none "
                 />
               </Form.Item>
@@ -373,7 +365,7 @@ const Settings = () => {
                     border-2 border-secondary
                     justify-start 
                     mt-[12px]
-                    text-white 
+                     
                      outline-none focus:border-none "
                 />
               </Form.Item>
@@ -382,11 +374,12 @@ const Settings = () => {
                   Forget Password
                 </button>
               </p>
+
+              {isError && <h1 className="text-red-500">{error?.data?.message}</h1>}
               <Form.Item>
                 <Button
-               
                   htmlType="submit"
-                  className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-secondary rounded-lg"
+                  className="block w-full h-[56px] px-2 py-4 mt-2  bg-secondary rounded-lg"
                 >
                   Update password
                 </Button>
@@ -430,17 +423,15 @@ const Settings = () => {
                       border-2 border-secondary
                       justify-start 
                       mt-[12px]
-                      text-white 
+                       
                        outline-none focus:border-none "
                   />
                 </Form.Item>
               </div>
               <Form.Item>
-              
                 <Button
-                 
                   htmlType="submit"
-                  className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-secondary rounded-lg"
+                  className="block w-full h-[56px] px-2 py-4 mt-2  bg-secondary rounded-lg"
                 >
                   Send OTP
                 </Button>
@@ -462,7 +453,7 @@ const Settings = () => {
                   numInputs={6}
                   inputStyle={{
                     height: "50px",
-                    background: "transparent",
+                    background: "",
                     width: "50px",
                     border: "1px solid #217CC2",
                     marginRight: "20px",
@@ -484,9 +475,9 @@ const Settings = () => {
                 //   size: "18px",
                 //   height: "56px",
                 // }}
-                className="bg-secondary
+                className="
               w-full
-              text-white mt-5 py-3 rounded-lg duration-200"
+               mt-5 py-3 rounded-lg duration-200"
               >
                 Verify
               </button>
@@ -495,7 +486,7 @@ const Settings = () => {
         )}
 
         {modelTitle === "Reset Password" && (
-          <div className="px-[60px] pb-[60px] bg-primary">
+          <div className="px-[60px] pb-[60px] bg-primary ">
             <Form
               form={form}
               name="dependencies"
@@ -522,16 +513,16 @@ const Settings = () => {
                   name="set_password"
                   prefix={
                     <IconLock
-                      className="mr-2 bg-white rounded-full p-[6px]"
+                      className="mr-2  rounded-full p-[6px]"
                       size={28}
-                     color="#217CC2"
+                      color="#217CC2"
                     />
                   }
                   className="p-4 bg-primary
                       rounded w-full 
                       justify-start 
                       mt-[12px]
-                      text-white 
+                       
                        outline-none focus:border-none border-secondary"
                 />
               </Form.Item>
@@ -564,7 +555,7 @@ const Settings = () => {
                   name="re_enter_password"
                   prefix={
                     <IconLock
-                      className="mr-2 bg-white rounded-full p-[6px]"
+                      className="mr-2  rounded-full p-[6px]"
                       size={28}
                       color="#217CC2"
                     />
@@ -573,7 +564,7 @@ const Settings = () => {
                   rounded w-full 
                   justify-start 
                   mt-[12px]
-                  text-white 
+                   
                    outline-none focus:border-none border-secondary"
                   //   bordered={false}
                 />
@@ -587,7 +578,7 @@ const Settings = () => {
                   //   height: "56px",
                   // }}
                   htmlType="submit"
-                  className="block w-full h-[56px] px-2 py-4 mt-2 text-white bg-secondary rounded-lg"
+                  className="block w-full h-[56px] px-2 py-4 mt-2  bg-secondary rounded-lg"
                 >
                   Update password
                 </Button>

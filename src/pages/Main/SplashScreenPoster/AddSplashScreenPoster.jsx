@@ -4,16 +4,65 @@ import React, { useRef, useState } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
+import { useGetAllPosterQuery } from "../../../redux/poster/posterApi";
+import ApiErrorAlert from "../../../utils/ApiErrorAlert";
 
 const AddSplashScreenPoster = () => {
   const navigate = useNavigate();
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const {data,isLoading,isError,error}=useGetAllPosterQuery()
 
-  const handleUploadScore = (values) => {
-    // console.log(values);
+ 
+  const handleUploadScore = async (values) => {
+    // console.log(values)
+    // Prepare the FormData object
+    const formData = new FormData();
+    formData.append("image", selectedFile); // Append the file
+    formData.append("posterType", "splash"); // Append additional properties
+    formData.append("headline",values.statusHeadline)
+    formData.append("status",values.status)
+    try {
+      let token=localStorage.getItem("token")
+      // Make the fetch request
+      const response = await fetch("http://localhost:8000/api/v1/poster", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the Bearer token
+          // "Content-Type": "multipart/form-data", // Do not set Content-Type header manually with FormData
+        },
+        body: formData,
+      });
+      // Check if the request was successful
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      // Parse the response
+      const result = await response.json();
+
+      // Display success message
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: result.message || "File uploaded successfully!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (error) {
+      console.error("Upload failed:", error);
+      Swal.fire({
+        position: "top-center",
+        icon: "error",
+        title: "File upload failed",
+        text: error.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
+
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);

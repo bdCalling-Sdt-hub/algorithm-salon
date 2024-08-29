@@ -2,15 +2,48 @@ import { Button, Form, Input } from 'antd';
 import React, { useState } from 'react';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { useEditContactUsMutation, useGetSingleSettingsQuery } from '../../../redux/settings/settingsApi';
+import Swal from 'sweetalert2';
+import Loading from '../../../utils/Loading';
 
 const AddHelp = () => {
     const navigate = useNavigate();
-
+const [editContactUs,{isLoading}]=useEditContactUsMutation()
+const {data:contactUs,isLoading:isContactUsLoading}=useGetSingleSettingsQuery()
     const [content, setContent] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
   
+    if(isContactUsLoading){
+      return <Loading/>
+    }
     const handleUploadScore = (values) => {
-      // console.log(values);
+      const contactUsObj={
+        whatsapp:parseFloat(values.whatsapp),
+        email:values.email
+      }
+      editContactUs(contactUsObj)
+      .then(res=>{
+        if(res.data.success){
+          Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: res.message || 'Contact and email updated successfully!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }).catch(error=>{
+        if(error){
+          Swal.fire({
+            position: 'top-center',
+            icon: 'error',
+            title: res.message || 'contact and email not updated successfully!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+
     };
   
     const handleFileChange = (event) => {
@@ -30,18 +63,17 @@ const AddHelp = () => {
             labelCol={{ span: 22 }}
             wrapperCol={{ span: 40 }}
             layout="vertical"
-            // initialValues={{
-            //   remember: true,
-            //   matchName: result?.matchName,
-            //   eventName: result?.eventDetails?.eventName,
-            // }}
+            initialValues={{
+              whatsapp:contactUs?.data?.whatsapp,
+              email:contactUs?.data?.email,
+            }}
             onFinish={handleUploadScore}
             //   onFinishFailed={handleCompanyInformationFailed}
             autoComplete="off"
           >
             <div className="flex gap-5">
               <Form.Item
-                name="adminNumber"
+                name="whatsapp"
                 label={
                   <span className="text-textColor text-[18px] ">
                    Whats App Number:
@@ -70,7 +102,7 @@ const AddHelp = () => {
             </div>
             <div className="flex gap-5">
               <Form.Item
-                name="adminEmail"
+                name="email"
                 label={
                   <span className="text-textColor text-[18px] ">Email</span>
                 }
