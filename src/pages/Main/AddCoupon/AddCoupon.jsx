@@ -1,6 +1,8 @@
 import {
+  Alert,
   Button,
   ConfigProvider,
+  DatePicker,
   Form,
   Input,
   Select,
@@ -11,37 +13,53 @@ import JoditEditor from "jodit-react";
 import React, { useRef, useState } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { PoweroffOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
+import {
+  useAddCuponMutation,
+  useGetAllCuponsQuery,
+  useRemoveCuponMutation,
+} from "../../../redux/Cupon/cuponApi";
+import { format } from "date-fns";
 
 const AddCoupon = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [user, setUser] = useState();
+  const [addCupon, { isLoading, isError, error }] = useAddCuponMutation();
+  const {
+    data: cupons,
+    isLoading: cuponsLoading,
+    isError: cuponError,
+  } = useGetAllCuponsQuery();
+  const [
+    removeCupon,
+    { data, isError: isRemovigError, error: removeError, isSuccess },
+  ] = useRemoveCuponMutation();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
-  const dataSource = [
-    {
-      key: "1",
-      couponCode: "ABC123",
-      packageName: "Standard",
-      startDate: "2023-12-12",
-      endDate: "2024-12-12",
-      percentage: 10,
-    },
-    {
-      key: "1",
-      couponCode: "ABC123",
-      packageName: "Standard",
-      startDate: "2023-12-12",
-      endDate: "2024-12-12",
-      percentage: 10,
-    },
-  ];
   const handleDelete = (record) => {
-      console.log(record);
-      
-  }
+    removeCupon(record._id).then((res) => {
+      if (res.data.success) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Cupon Deleted successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
+  const startDateChange = (_, dateString) => {
+    setStartDate(dateString);
+  };
 
+  const endDateChange = (_, dateString) => {
+    setEndDate(dateString);
+  };
   const columns = [
     {
       title: "#SI",
@@ -51,35 +69,37 @@ const AddCoupon = () => {
     },
     {
       title: "Coupon Code",
-      dataIndex: "couponCode",
-      key: "name",
+      dataIndex: "cuponCode",
+      key: "cuponCode",
     },
     {
       title: "Package Name",
-      dataIndex: "packageName",
-      key: "providerName",
+      dataIndex: "cuponValueFor",
+      key: "cuponValueFor",
     },
     {
       title: "Start Date",
       dataIndex: "startDate",
-      key: "phoneNumber",
+      key: "startDate",
+      render: (val, record) => format(new Date(val),"PP")
     },
     {
       title: "End Date",
       dataIndex: "endDate",
-      key: "date",
+      key: "endDate",
+      render: (val, record) => format(new Date(val),"PP")
     },
     {
       title: "Percentage",
       dataIndex: "percentage",
-      key: "date",
+      key: "percentage",
     },
 
     {
       title: "Action",
       dataIndex: "",
       key: "x",
-      render: (_, record) => (
+      render: (val, record) => (
         <Button
           onClick={() => {
             handleDelete(record);
@@ -89,11 +109,44 @@ const AddCoupon = () => {
         </Button>
       ),
     },
-
   ];
 
+  if (isRemovigError && removeError) {
+    Swal.fire({
+      position: "top-center",
+      icon: "error",
+      title: error.data.message,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+  if (isError && error) {
+    Swal.fire({
+      position: "top-center",
+      icon: "error",
+      title: error.data.message,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
   const handleUploadScore = (values) => {
-    console.log(values);
+    const cuponObject = {
+      startDate,
+      endDate,
+      ...values,
+      percentage: parseFloat(values.percentage),
+    };
+    addCupon(cuponObject).then((res) => {
+      if (res.data.success) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Cupon added successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
 
   return (
@@ -119,7 +172,7 @@ const AddCoupon = () => {
           >
             <div className="flex gap-5">
               <Form.Item
-                name="couponCode"
+                name="cuponCode"
                 label={
                   <span className="text-secondary text-[18px] ">
                     Coupon Code
@@ -147,7 +200,7 @@ const AddCoupon = () => {
               </Form.Item>
 
               <Form.Item
-                name="package"
+                name="cuponValueFor"
                 label={
                   <span className="text-secondary  text-[18px] ">Package</span>
                 }
@@ -169,15 +222,15 @@ const AddCoupon = () => {
                   }
                   options={[
                     {
-                      value: "1",
+                      value: "Basic",
                       label: "Basic",
                     },
                     {
-                      value: "2",
+                      value: "Standard",
                       label: "Standard",
                     },
                     {
-                      value: "3",
+                      value: "Premium",
                       label: "Premium",
                     },
                   ]}
@@ -190,22 +243,12 @@ const AddCoupon = () => {
                 />
               </Form.Item>
 
-              <Form.Item
-                name="startDate"
-                label={
-                  <span className="text-secondary text-[18px] ">
-                    Start Date
-                  </span>
-                }
-                className="flex-1"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Start Date!",
-                  },
-                ]}
-              >
-                <Input
+              <div className="flex-1">
+                <h1 className="text-secondary mt-[8px]  text-[18px] ">
+                  Start Date
+                </h1>
+                <DatePicker
+                  onChange={startDateChange}
                   placeholder="Start Date"
                   className="p-4 bg-primary
               rounded w-full 
@@ -216,21 +259,14 @@ const AddCoupon = () => {
               items-center 
               gap-4 inline-flex focus:bg-primary hover:bg-primary focus:border-secondary hover:border-secondary"
                 />
-              </Form.Item>
-              <Form.Item
-                name="endDate"
-                label={
-                  <span className="text-secondary text-[18px]">End Date</span>
-                }
-                className="flex-1"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your End Date!",
-                  },
-                ]}
-              >
-                <Input
+              </div>
+
+              <div className="flex-1">
+                <h1 className="text-secondary mt-[8px] text-[18px] ">
+                  End Date
+                </h1>
+                <DatePicker
+                  onChange={endDateChange}
                   placeholder="End Date"
                   className="p-4 bg-primary
               rounded w-full 
@@ -241,9 +277,10 @@ const AddCoupon = () => {
               items-center 
               gap-4 inline-flex focus:bg-primary hover:bg-primary focus:border-secondary hover:border-secondary"
                 />
-              </Form.Item>
+              </div>
+
               <Form.Item
-                name="packageAmount"
+                name="percentage"
                 label={
                   <span className="text-secondary text-[18px] ">
                     Percentage
@@ -271,13 +308,36 @@ const AddCoupon = () => {
               </Form.Item>
             </div>
 
+            {isError && (
+              <Alert
+                message="Error"
+                description={error.data.error}
+                type="error"
+                showIcon
+              />
+            )}
+            {isLoading && (
+              <Button
+                htmlType="submit"
+                // onClick={handleAddToBlog}
+                loading={isLoading}
+                icon={<PoweroffOutlined />}
+                block
+                className="block w-[500px] h-[56px] mt-[30px] px-2 py-4  text-white bg-secondary"
+              >
+                Add Cupon
+              </Button>
+            )}
+
             <Button
               htmlType="submit"
               // onClick={handleAddToBlog}
+
+              icon={<PoweroffOutlined />}
               block
               className="block w-[500px] h-[56px] mt-[30px] px-2 py-4  text-white bg-secondary"
             >
-              Add Subscription
+              Add Cupon
             </Button>
           </Form>
         </div>
@@ -295,18 +355,18 @@ const AddCoupon = () => {
             }}
           >
             <Table
-            //   pagination={{
-            //     position: ["bottomCenter"],
-            //     current: currentPage,
-            //     // pageSize:10,
-            //     // total:usersAll?.pagination?.Users,
-            //     // showSizeChanger: false,
-            //     //   onChange: handleChangePage,
-            //   }}
+              //   pagination={{
+              //     position: ["bottomCenter"],
+              //     current: currentPage,
+              //     // pageSize:10,
+              //     // total:usersAll?.pagination?.Users,
+              //     // showSizeChanger: false,
+              //     //   onChange: handleChangePage,
+              //   }}
               pagination={false}
               columns={columns}
               // dataSource={usersAll?.data?.attributes}
-              dataSource={dataSource}
+              dataSource={cupons?.data}
             />
           </ConfigProvider>
         </div>
