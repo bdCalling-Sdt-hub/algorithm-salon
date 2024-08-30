@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { IoIosNotificationsOutline } from "react-icons/io";
 
 
@@ -42,13 +43,15 @@ const NotificationCart = ({item}) => {
               
                 <h1 className="text-[16px]  font-normal">
                     
-                    {message}.
+                    {item.adminMsg}
                 </h1>
                 {/* <p className="text-[14px] text-[#979797]">{formatDate(createdAt)}</p> */}
             
             </div>
             <div>
-                <small className="">{calculateTimeDifference(createdAt)}</small>
+                <small className="">{calculateTimeDifference(item.createdAt)}</small>
+                <br/>
+                {/* <small className="">{format(new Date(item.createdAt),"p")}</small> */}
             </div>
         </div>
     );

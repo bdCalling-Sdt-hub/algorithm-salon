@@ -9,6 +9,10 @@ export const usersApiSlice = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    getUserProfile: builder.query({
+      query: () => `/user/profile`,
+      providesTags: ["profile"],
+    }),
     getAllUsers: builder.query({
       query: (queryString) => `/user?${queryString}`,
     }),
@@ -35,6 +39,39 @@ export const usersApiSlice = baseApi.injectEndpoints({
         };
       },
     }),
+    changeProfilePicture:builder.mutation({
+      query: (data) => {
+        return {
+          url: `/user/profile-picture`,
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["profile"],
+    }),
+    updateProfile:builder.mutation({
+      query: (data) => {
+        return {
+          url: `/user/profile-picture`,
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["profile"],
+    }),
+    updateProfileInfo:builder.mutation({
+      query: ({id,data}) => {
+        return {
+          url: `/user/${id}`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["profile"],
+    }),
+    getNotification:builder.query({
+      query: (queryString) => `/notification?${queryString}`,
+    })
   }),
 });
 export const {
@@ -42,5 +79,9 @@ export const {
   useGetAllUsersQuery,
   useGetSingleSalonQuery,
   useVerifySalonMutation,
-  useChangePasswordMutation
+  useChangePasswordMutation,
+  useGetUserProfileQuery,
+  useChangeProfilePictureMutation,
+  useUpdateProfileInfoMutation,
+  useGetNotificationQuery
 } = usersApiSlice;

@@ -16,7 +16,7 @@ const Login = () => {
 
   useEffect(() => {
     const isTokenExist = localStorage.getItem("token");
-
+    
     if (isTokenExist) {
       navigate("/");
     } else {
@@ -27,9 +27,10 @@ const Login = () => {
   const onFinish = async ({ email, password }) => {
     login({ email, password })
       .then((res) => {
-        console.log(res);
+
         if (res.data) {
-          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", res.data?.data.token);
+          localStorage.setItem("userInfo", JSON.stringify(res.data?.data.user))
           Swal.fire({
             position: "top-center",
             icon: "success",

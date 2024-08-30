@@ -6,21 +6,53 @@ import { useEffect, useRef, useState } from "react";
 // import { useGetAboutUsQuery } from "../../../redux/Features/getAboutUsApi";
 // import baseURL from "../../../config";
 import Swal from "sweetalert2";
+import { useEditPrivacyPolicyMutation, useGetPrivacyPolicyQuery } from "../../../redux/settings/settingsApi";
+import Loading from "../../../utils/Loading";
 
 const EditPrivacyPolicy = () => {
     const navigate = useNavigate();
     const editor = useRef(null);
+    const {data,isLoading,isError}=useGetPrivacyPolicyQuery()
+    const [editPrivacyPolicy,{isLoading:editLoading,isError:editingError}]=useEditPrivacyPolicyMutation()
+    const [content, setContent] = useState("");
+
+    if(isLoading){
+      return <Loading/>
+    }
     // const {data,isSuccess,isLoading} = useGetAboutUsQuery();
     // const [content, setContent] = useState(data?.data?.attributes?.content);
-    const [content, setContent] = useState("");
     // useEffect(()=>{
     // setContent(data?.data?.attributes?.content);  
     // },[data])
     // console.log("data",data);
-  console.log(content);
+  // console.log(content);
   
     const handleUpdate = async ()=>{
-      console.log(content);
+      // console.log(content)
+      let object={content:content}
+      editPrivacyPolicy(object)
+      .then(res=>{
+        if(res.data){
+          Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: res?.data?.message,
+                    showConfirmButton: false,
+                    timer: 1500,
+        })
+      }})
+      .catch(error=>{
+        console.log(error)
+        if(error){
+          Swal.fire({
+                    position: "top-center",
+                    icon: "error",
+                    title: error?.message || "Privacy policy not updated successfully",
+                    showConfirmButton: false,
+                    timer: 1500,
+        })
+      }})
+   
     //   try {
     //     const response = await baseURL.put(`/setting/about-us`, {
     //       content: content
@@ -71,7 +103,7 @@ const EditPrivacyPolicy = () => {
         <div className="text-justify  mt-[24px] relative ">
           <JoditEditor
         ref={editor}
-        value={content}
+        value={data?.data?.content}
         onChange={(newContent) => {
           setContent(newContent);
         }}

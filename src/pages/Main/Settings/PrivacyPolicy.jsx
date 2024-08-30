@@ -1,14 +1,15 @@
 import React from 'react';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGetPrivacyPolicyQuery } from '../../../redux/settings/settingsApi';
+import Loading from '../../../utils/Loading'
 
 const PrivacyPolicy = () => {
     const navigate = useNavigate();
-    // const {data,isSuccess,isLoading} = useGetAboutUsQuery();
-    // if(isLoading){  
-    //     return <Loading/>;
-    // }
-    // console.log(data);
+  const {data,isLoading,isError}=useGetPrivacyPolicyQuery()
+    if(isLoading){
+      return <Loading/>
+    }
     // const content = data?.data?.attributes?.content;
     const content = "lorem";
     return (
@@ -19,11 +20,11 @@ const PrivacyPolicy = () => {
       onClick={() => navigate("/settings")}
       size={34}
     />
-        <h1 className="text-[24px] font-semibold ">
+        <h1 className="text-[24px] ">
           Privacy Policy
         </h1>
       </div>
-      <div className=" text-justify bg-primary mt-[24px] h-[60vh] overflow-y-auto border-2 border-secondary rounded-md p-2 font-bold" dangerouslySetInnerHTML={{__html: content}}>
+      <div className=" text-justify bg-primary mt-[24px] h-[60vh] overflow-y-auto border-2 border-secondary rounded-md p-2 " dangerouslySetInnerHTML={{__html: data?.data?.content}}>
         
       </div>
     <Link to={`/settings/edit-privacy-policy`} className="absolute text-center bottom-[-60px] bg-secondary

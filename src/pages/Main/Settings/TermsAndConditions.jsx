@@ -1,14 +1,16 @@
 import React from 'react';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGetTermsAndConditionQuery } from '../../../redux/settings/settingsApi';
+import Loading from '../../../utils/Loading'
 
 const TermsAndConditions = () => {
     const navigate = useNavigate();
-    // const {data,isSuccess,isLoading} = useGetAboutUsQuery();
-    // if(isLoading){  
-    //     return <Loading/>;
-    // }
-    // console.log(data);
+  const {data,isLoading,isError}=useGetTermsAndConditionQuery()
+
+    if(isLoading){
+      return <Loading/>
+    }
     // const content = data?.data?.attributes?.content;
     const content = "lorem";
     return (
@@ -19,14 +21,14 @@ const TermsAndConditions = () => {
       onClick={() => navigate("/settings")}
       size={34}
     />
-        <h1 className="text-[24px] font-semibold ">
-          Terms & Conditions
+        <h1 className="text-[24px] ">
+          Terms and Condition
         </h1>
       </div>
-      <div className=" text-justify bg-primary mt-[24px] h-[60vh] overflow-y-auto border-2 border-secondary rounded-md p-2 font-bold" dangerouslySetInnerHTML={{__html: content}}>
+      <div className=" text-justify bg-primary mt-[24px] h-[60vh] overflow-y-auto border-2 border-secondary rounded-md p-2 " dangerouslySetInnerHTML={{__html: data?.data?.content}}>
         
       </div>
-    <Link to={`/settings/edit-terms-conditions`} className="absolute text-center bottom-[-60px] bg-secondary
+      <Link to={`/settings/edit-terms-conditions`} className="absolute text-center bottom-[-60px] bg-secondary
         text-white mt-5 py-3 rounded-lg w-full text-[18px] font-medium  duration-200">Edit Terms & Conditions</Link>
         </div>
     );

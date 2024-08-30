@@ -5,24 +5,34 @@ import { CiCalendarDate } from "react-icons/ci";
 // import "react-phone-number-input/style.css";
 // import PhoneInput from "react-phone-number-input";
 import { useNavigate } from "react-router-dom";
+import { useChangeProfilePictureMutation, useGetUserProfileQuery } from "../../../redux/user/userApi";
+import Loading from "../../../utils/Loading"
 
 const ProfileInformation = () => {
     const [currentUser,setCurrentUser] = useState()
   const navigate = useNavigate();
-  const baseUrl = import.meta.env.VITE_API_URL;
+  // const baseUrl = import.meta.env.IP_BASE_URL;
+  const {data,isLoading,isError}=useGetUserProfileQuery()
+  const [changeProfilePicture,{isLoading:addingProfileLoading,isError:addingProfileError}]=useChangeProfilePictureMutation()
+
+  // console.log(baseUrl)
   useEffect(()=>{
     const storedUser = localStorage.getItem('user-update');
     const user = JSON.parse(storedUser);
     console.log(user);
     setCurrentUser(user);
   },[])
-  console.log("uuuuuser",currentUser);
+  
+  if(isLoading){
+    return <Loading/>
+  }
+  const {_id='',name='',email="",role="",profilePictureUrl="",profileId={}}=data?.data
     return (
         <div>
       <div className="flex justify-between items-center ml-[24px] mt-[40px] mb-[63px]">
         <h1 className="text-[30px] font-medium">Profile Information</h1>
         <div
-            onClick={(e) =>navigate(`/edit-profile/${currentUser?._id}`)}
+            onClick={(e) =>navigate(`/edit-profile/${_id}`)}
           className="flex gap-2 items-center py-[15px]
                  px-[40px]
                   bg-secondary
@@ -40,13 +50,13 @@ const ProfileInformation = () => {
           <img
             className="w-[242px] h-[242px] rounded-full"
             // src={`${import.meta.env.VITE_BASE_URL}${currentUser?.image?.publicFileURL}`}
-            src="https://i.ibb.co/VBcnsLy/download.jpg"
+            src={`http://192.168.10.11:8000/${profilePictureUrl}`}
             alt=""
           />
           <div className="flex flex-col justify-center items-center">
-            <p className="text-[20px] ">{currentUser?.role?.toUpperCase() || "Admin"}</p>
+            <p className="text-[20px] ">{role?.toUpperCase() || "Admin"}</p>
             <h1 className="text-[30px] font-medium">
-             {currentUser?.name?.toUpperCase() || "Ahad Hossain Aiman"}
+             {name?.toUpperCase() || ""}
             </h1>
           </div>
         </div>
@@ -64,7 +74,7 @@ const ProfileInformation = () => {
                 <Input
               
                   placeholder="First name"
-                  value={currentUser?.name}
+                  value={name}
                   className="p-4 bg-primary
                           rounded w-full 
                           justify-start 
@@ -90,7 +100,7 @@ const ProfileInformation = () => {
               <Input
           
                 placeholder="Email"
-                value={currentUser?.email}
+                value={email}
                 className="p-4 bg-primary
                 rounded w-full 
                 justify-start 
@@ -114,7 +124,7 @@ const ProfileInformation = () => {
               <Input
             
                 placeholder="Phone"
-                value={currentUser?.phone || "Not Provided"}
+                value={profileId?.contactNumber || "Not Provided"}
                 className="p-4 bg-primary
                 rounded w-full 
                 justify-start 
@@ -128,29 +138,7 @@ const ProfileInformation = () => {
                 readOnly
               />
             </div>
-            {/* <div className="flex-1">
-              <label
-                htmlFor=""
-                className="text-white  text-[18px] font-medium mb-[12px]"
-              >
-                Date Of Birth
-              </label>
-              <Input
-                // onChange={(e) => setDateOfBirth(e.target.value)}
-                placeholder="Date Of Birth"
-                value={currentUser?.dateOfBirth?.split("T")[0]}
-                className="p-4 bg-[#706768]
-               rounded w-full 
-               justify-start 
-               border-none
-               mt-[12px]
-               text-white
-               items-center 
-               gap-4 inline-flex outline-none focus:border-none focus:bg-[#706768] hover:bg-[#706768]"
-                prefix={<CiCalendarDate color="white" size={20} />}
-               
-              />
-            </div> */}
+           
           </div>
         </div>
       </div>
