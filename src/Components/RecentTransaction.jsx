@@ -9,10 +9,11 @@ import { useReactToPrint } from "react-to-print";
 
 const RecentTransaction = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [queryString,setQueryString]=useState("limit=10&page=0")
   const myRef = useRef();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [user, setUser] = useState();
-  const { data, isLoading } = useGetTransectionsQuery();
+  const { data, isLoading } = useGetTransectionsQuery(queryString);
   const handlePrint = useReactToPrint({
     content: () => myRef.current,
   });

@@ -27,7 +27,7 @@ const EditProfileInformation = () => {
 
   useEffect(() => {
     if (data && data.data?.profilePictureUrl) {
-      setImageUrl(`http://192.168.10.11:8000/${data.data.profilePictureUrl}`);
+      setImageUrl(`http://192.168.10.11:8000:8000/${data.data.profilePictureUrl}`);
     }
   }, [data]);
 
@@ -83,7 +83,7 @@ const EditProfileInformation = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        "http://localhost:8000/api/v1/user/profile-picture",
+        "http://192.168.10.11:8000/api/v1/user/profile-picture",
         {
           method: "POST",
           headers: {

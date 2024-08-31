@@ -71,8 +71,36 @@ export const usersApiSlice = baseApi.injectEndpoints({
     }),
     getNotification:builder.query({
       query: (queryString) => `/notification?${queryString}`,
-    })
+    }),
+    sendOtpToUserEmail:builder.mutation({
+      query: (data) => {
+        return {
+          url: `/user/send-otp`,
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
+    verifyOtp:builder.mutation({
+      query: (data) => {
+        return {
+          url: `/user/verify-otp`,
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
+    updatePassword:builder.mutation({
+      query: (data) => {
+        return {
+          url: `/user/change-password`,
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
   }),
+  
 });
 export const {
   useLoginMutation,
@@ -83,5 +111,8 @@ export const {
   useGetUserProfileQuery,
   useChangeProfilePictureMutation,
   useUpdateProfileInfoMutation,
-  useGetNotificationQuery
+  useGetNotificationQuery,
+  useSendOtpToUserEmailMutation,
+  useVerifyOtpMutation,
+ useUpdatePasswordMutation
 } = usersApiSlice;

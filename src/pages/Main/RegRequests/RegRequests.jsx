@@ -214,7 +214,7 @@ const SalonOwner = () => {
               position: ["bottomCenter"],
               current: currentPage,
                 pageSize:10,
-                // total:usersAll?.pagination?.Users,
+                total:data?.data?.count,
                 // showSizeChanger: false,
                 onChange: handleChangePage,
             }}

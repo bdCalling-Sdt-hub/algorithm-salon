@@ -6,7 +6,7 @@ import { FaRegUser } from "react-icons/fa6";
 import { MdMenu } from "react-icons/md";
 import { io } from "socket.io-client";
 // import SearchBox from "../SearchBox/SearchBox";
-const socket = io("http://localhost:8000");
+const socket = io("http://192.168.10.11:8000");
 const Header = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
@@ -20,10 +20,14 @@ const Header = () => {
     });
     // Cleanup on component unmount
     return () => {
-     
       socket.off(`notification::${user._id}`);
     };
   })
+
+const handleNotification=()=>{
+  setNotifications([])
+  navigate("notification")
+}
   return (
     <div className="flex justify-between items-center rounded-md mb-[24px] p-[16px] bg-primary">
       <div className="flex items-center gap-5">
@@ -40,8 +44,9 @@ const Header = () => {
       <div className="flex gap-5">
         {/* <Dropdown overlay={menu} placement="bottomRight" arrow> */}
         <div
-          onClick={(e) => navigate("notification")}
+          // onClick={(e) => navigate("notification")}
           className="relative flex items-center "
+          onClick={()=>handleNotification()}
         >
           <Badge style={{ backgroundColor: "red" }} count={notifications.length}>
             <IoIosNotificationsOutline

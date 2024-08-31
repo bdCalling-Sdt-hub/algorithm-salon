@@ -7,13 +7,12 @@ import { useGetTransectionsQuery } from "../redux/summary/summary";
 import { useReactToPrint } from "react-to-print";
 import Loading from "../utils/Loading";
 
-
 const FullRecentTransaction = () => {
-    const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [queryString,setQueryString]=useState("limit=2&page=0")
+  const [queryString, setQueryString] = useState("limit=10&page=0");
   const [user, setUser] = useState();
-  const myRef=useRef()
+  const myRef = useRef();
   const { data, isLoading } = useGetTransectionsQuery(queryString);
   const handlePrint = useReactToPrint({
     content: () => myRef.current,
@@ -67,67 +66,61 @@ const FullRecentTransaction = () => {
     },
   ];
 
-  const handleChangePage=(page)=>{
-    setQueryString(`limit=2&page=${page-1}`)
-    setCurrentPage(page)
+  const handleChangePage = (page) => {
+    setQueryString(`limit=10&page=${page - 1}`);
+    setCurrentPage(page);
     // console.log(page);
-    
-  }
-  console.log(queryString)
-    return (
-        
-        <div>
-        <div className="flex justify-between items-center">
-          {/* <DatePicker
+  };
+  console.log(queryString);
+  return (
+    <div>
+      <div className="flex justify-between items-center">
+        {/* <DatePicker
             className="custom-date-picker"
             onChange={onChange}
             picker="month"
             suffixIcon
           /> */}
+      </div>
+      <div className="bg-primary  border-2 rounded-t-lg mt-[24px]">
+        <div className="flex py-[22px] mx-[20px] justify-between items-center">
+          <p className=" test-[24px] font-bold">Transactions</p>
         </div>
-        <div className="bg-primary  border-2 rounded-t-lg mt-[24px]">
-          <div className="flex py-[22px] mx-[20px] justify-between items-center">
-            <p className=" test-[24px] font-bold">Transactions</p>
-          </div>
-          <ConfigProvider
-  theme={{
-    components: {
-      Table: {
-        headerBg: "#00A572",
-        headerColor:"white",
-        headerBorderRadius: 2,
-        colorBgContainer: "#E6F6F1",
-      },
-    },
-  }}
->
-
-
+        <ConfigProvider
+          theme={{
+            components: {
+              Table: {
+                headerBg: "#00A572",
+                headerColor: "white",
+                headerBorderRadius: 2,
+                colorBgContainer: "#E6F6F1",
+              },
+            },
+          }}
+        >
           <Table
-          pagination={{
-            position: ["bottomCenter"],
-            current: currentPage,
-              pageSize:2,
-              total:data?.data?.count,
+            pagination={{
+              position: ["bottomCenter"],
+              current: currentPage,
+              pageSize: 10,
+              total: data?.data?.count,
               // showSizeChanger: false,
               onChange: handleChangePage,
-          }}
-        
-          columns={columns}
-          // dataSource={usersAll?.data?.attributes}
-          dataSource={data?.data?.transections}
-
-        />
+            }}
+            columns={columns}
+            // dataSource={usersAll?.data?.attributes}
+            dataSource={data?.data?.transections}
+          />
         </ConfigProvider>
-        </div>
-        <Modal
+      </div>
+      <Modal
         open={isModalOpen}
         onOk={() => setIsModalOpen(false)}
         onCancel={() => setIsModalOpen(false)}
         footer={[]}
         closeIcon
       >
-      <div className="text-black bg-primary">
+        <div className="text-black bg-primary">
           <div className="flex justify-center items-center gap-2 flex-col border-b border-b-gray-300">
             <p className="text-[26px] font-medium text-textColor mb-[16px] my-10">
               Service Requests
@@ -165,8 +158,8 @@ const FullRecentTransaction = () => {
           </div>
         </div>
       </Modal>
-      </div>
-    );
-}
+    </div>
+  );
+};
 
 export default FullRecentTransaction;

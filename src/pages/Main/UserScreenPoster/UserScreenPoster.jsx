@@ -35,7 +35,7 @@ const UserScreenPoster = () => {
     try {
       let token=localStorage.getItem("token")
       // Make the fetch request
-      const response = await fetch("http://localhost:8000/api/v1/poster", {
+      const response = await fetch("http://192.168.10.11:8000/api/v1/poster", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`, // Include the Bearer token
