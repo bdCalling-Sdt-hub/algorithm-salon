@@ -4,16 +4,17 @@ import { useNavigate } from "react-router-dom";
 import SubscriptionCart from "../../../Components/SubscriptionCart";
 import { useGetSubscriptionsQuery } from "../../../redux/subscription/subscriptionApi";
 import Loading from "../../../utils/Loading";
+import { Alert } from "antd";
 
 const Subscription = () => {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useGetSubscriptionsQuery();
+  const { data, isLoading, isError ,error} = useGetSubscriptionsQuery();
 
   if (isLoading) {
     return <Loading />;
   }
   if (isError) {
-    return "Error Happend";
+    return   <Alert message={error?.message} type="error" />
   }
 
   const subscriptions = data?.data;

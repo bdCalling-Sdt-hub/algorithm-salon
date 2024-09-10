@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space } from "antd";
+import { Button, Form, Input, Select, Space } from "antd";
 import JoditEditor from "jodit-react";
 import React, { useRef, useState } from "react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
@@ -27,6 +27,7 @@ const AddCategory = () => {
     // console.log(subscription)
     addSubscription(subscription)
     .then((res) => {
+      // console.log(res.data)
       if (res.data) {
         Swal.fire({
           position: "top-center",
@@ -36,14 +37,22 @@ const AddCategory = () => {
           timer: 1500,
         });
       }
+      if(res.error){
+        Swal.fire({
+          icon: "error",
+          title: "Error Happend !!!",
+          text: res.error.data.message,
+          // footer: '<a href="#">Why do I have this issue?</a>',
+        });
+      }
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         icon: "error",
-        title: "Try Again...",
-        text: error.message,
-        footer: '<a href="#">Why do I have this issue?</a>',
+        title: "Error Happend !!!",
+        text: error.message || "Server side error happend",
+        // footer: '<a href="#">Why do I have this issue?</a>',
       });
     });
   };
@@ -73,6 +82,74 @@ const AddCategory = () => {
           autoComplete="off"
         >
           <div className="flex gap-5">
+          {/* <Form.Item
+                name="packageName"
+                label={
+                  <span className="text-textColor text-[18px] ">
+                    Package Name
+                  </span>
+                }
+                className="flex-1"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Package!",
+                  },
+                ]}
+              >
+                <Select
+                  showSearch
+                  placeholder="Select a Package"
+                  filterOption={(input, option) =>
+                    (option?.label ?? "")
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
+                  options={[
+                    {
+                      value: "Basic",
+                      label: "Basic",
+                    },
+                    {
+                      value: "Standard",
+                      label: "Standard",
+                    },
+                    {
+                      value: "Premium",
+                      label: "Premium",
+                    },
+                    {
+                      value: "VIP",
+                      label: "VIP",
+                    },
+                    {
+                      value: "Silver",
+                      label: "Silver",
+                    },
+                    {
+                      value: "Gold",
+                      label: "Gold",
+                    },
+                    {
+                      value: "Platinum",
+                      label: "Platinum",
+                    },
+                    {
+                      value: "Diamond",
+                      label: "Diamond",
+                    },
+                  ]}
+      
+                  // className=" bg-primary
+                  // rounded w-full 
+                  // justify-start 
+                  // border-2
+                  // border-secondary
+                  // mt-[12px]
+                  // items-center 
+                  // gap-4 inline-flex focus:bg-primary hover:bg-primary focus:border-secondary hover:border-secondary"
+                />
+              </Form.Item> */}
             <Form.Item
               name="packageName"
               label={
@@ -108,6 +185,7 @@ const AddCategory = () => {
                 </span>
               }
               className="flex-1"
+              
               rules={[
                 {
                   required: true,
@@ -117,6 +195,7 @@ const AddCategory = () => {
             >
               <Input
                 placeholder="Package Amount"
+                type="number"
                 className="p-4 bg-primary
               rounded w-full 
               justify-start 
@@ -147,6 +226,7 @@ const AddCategory = () => {
             >
               <Input
                 placeholder="Package Expiration"
+                 type="number"
                 className="p-4 bg-primary
               rounded w-full 
               justify-start 
@@ -161,6 +241,7 @@ const AddCategory = () => {
             </Form.Item>
             <Form.Item
                 name="tagCount"
+                
                 label={
                   <span className="text-textColor text-[18px] ">Tag Count</span>
                 }
@@ -168,6 +249,7 @@ const AddCategory = () => {
               >
                 <Input
                   placeholder="Tag Count"
+                   type="number"
                   className="p-4 bg-primary rounded w-full border-2 border-secondary mt-[12px]"
                 />
               </Form.Item>

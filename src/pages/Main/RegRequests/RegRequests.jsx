@@ -13,7 +13,9 @@ const SalonOwner = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [queryString, setQueryString] = useState(`role=SalonOwner&limit=10&page=0&verified=false`);
     const [user, setUser] = useState();
-    const { data, isLoading } = useGetAllUsersQuery(queryString);
+    const { data, isLoading } = useGetAllUsersQuery(queryString,{
+      refetchOnMountOrArgChange:true
+    });
   
     const dataSource = [
       {
@@ -123,6 +125,7 @@ const SalonOwner = () => {
       return <Loading/>
     }
     const handleView = (id) => {
+      
       navigate(`/reg-requests/requests-details/${id}`);
     };
   

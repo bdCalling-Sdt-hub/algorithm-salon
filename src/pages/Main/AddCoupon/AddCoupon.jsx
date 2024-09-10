@@ -233,6 +233,26 @@ const AddCoupon = () => {
                       value: "Premium",
                       label: "Premium",
                     },
+                    {
+                      value: "VIP",
+                      label: "VIP",
+                    },
+                    {
+                      value: "Silver",
+                      label: "Silver",
+                    },
+                    {
+                      value: "Gold",
+                      label: "Gold",
+                    },
+                    {
+                      value: "Platinum",
+                      label: "Platinum",
+                    },
+                    {
+                      value: "Diamond",
+                      label: "Diamond",
+                    },
                   ]}
                   className=" bg-primary
               rounded w-full 
