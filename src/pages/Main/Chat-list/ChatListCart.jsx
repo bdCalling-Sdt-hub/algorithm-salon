@@ -14,10 +14,7 @@ const ChatListCart = ({item}) => {
       _id,
       unreadCount
     } = item;
-    // const [deleteGroup, { isLoading, isSuccess, isError, error }] = useDeleteGroupMutation();
-    console.log(item);
     return (
-      
       <div className="bg-primary cursor-pointer rounded-lg p-2 my-3">
     <div className="flex justify-between items-center">
       <div

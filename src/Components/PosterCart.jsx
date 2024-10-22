@@ -21,7 +21,7 @@ const PosterCart = ({ data }) => {
         <ApiErrorAlert isError={isError} errorMessage={error?.error.message}/>
       <img
         className="w-[300px] mx-auto"
-        src={`http://192.168.10.11:8000:8000/${data.imageUrl}`}
+        src={`http://192.168.10.11:8000/${data.imageUrl}`}
         alt=""
       />
       <p className="text-textColor text-[18px] text-center my-2 font-semibold">

@@ -72,6 +72,7 @@ const RequestDetails = () => {
       }
     })
   }
+  // console.log(coverPhotoUrl)
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg">
@@ -89,7 +90,7 @@ const RequestDetails = () => {
         {/* Image and Basic Info */}
         <div className="p-4">
           <img
-            src={`http://192.168.10.11:8000:8000/${coverPhotoUrl.publicUrl}`} // Replace with actual image URL
+            src={`http://192.168.10.11:8000/${coverPhotoUrl?.publicUrl}`} // Replace with actual image URL
             alt="Barber Shop"
             className="w-full h-48 object-cover rounded-lg mb-4"
           />

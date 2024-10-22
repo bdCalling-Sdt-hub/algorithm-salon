@@ -19,7 +19,7 @@ const ProfileInformation = () => {
   useEffect(()=>{
     const storedUser = localStorage.getItem('user-update');
     const user = JSON.parse(storedUser);
-    console.log(user);
+    // console.log(user);
     setCurrentUser(user);
   },[])
   
@@ -50,7 +50,7 @@ const ProfileInformation = () => {
           <img
             className="w-[242px] h-[242px] rounded-full"
             // src={`${import.meta.env.VITE_BASE_URL}${currentUser?.image?.publicFileURL}`}
-            src={`http://192.168.10.11:8000:8000/${profilePictureUrl}`}
+            src={`http://192.168.10.11:8000/${profilePictureUrl}`}
             alt=""
           />
           <div className="flex flex-col justify-center items-center">

@@ -1,52 +1,39 @@
-import { Button, Form, Input, Space } from "antd";
-import JoditEditor from "jodit-react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import { Button, Form } from "antd";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-// import { useAddSubscriptionMutation } from "../../../redux/subscription/subscriptionApi";
-import { useAddPosterMutation } from "../../../redux/poster/posterApi";
 import Swal from "sweetalert2";
 import ApiErrorAlert from "../../../utils/ApiErrorAlert";
 
 const UserScreenPoster = () => {
   const navigate = useNavigate();
-  const editor = useRef(null);
-  const [content, setContent] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [addPoster, { data, isLoading, isError, error }] =
-    useAddPosterMutation();
-
-  if (isError && error) {
-    Swal.fire({
-      position: "top-center",
-      icon: "error",
-      title: error.data.message || "Poster Not Added Successfully!!!",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handleUploadScore = async () => {
+    if (!selectedFile) return;
+
     // Prepare the FormData object
     const formData = new FormData();
     formData.append("image", selectedFile); // Append the file
     formData.append("posterType", "user"); // Append additional properties
+
     try {
-      let token=localStorage.getItem("token")
+      let token = localStorage.getItem("token");
       // Make the fetch request
       const response = await fetch("http://192.168.10.11:8000/api/v1/poster", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`, // Include the Bearer token
-          // "Content-Type": "multipart/form-data", // Do not set Content-Type header manually with FormData
         },
         body: formData,
       });
+
       // Check if the request was successful
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+
       // Parse the response
       const result = await response.json();
 
@@ -72,8 +59,19 @@ const UserScreenPoster = () => {
   };
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setSelectedFile(file);
+
+    if (file) {
+      // Create a URL for the selected file and set it for preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
+
   return (
     <div className="ml-[24px] overflow-auto">
       <div className="mt-[44px] cursor-pointer flex items-center pb-3 gap-2">
@@ -83,32 +81,30 @@ const UserScreenPoster = () => {
         </h1>
       </div>
       <div>
-        <ApiErrorAlert isError={isError} errorMessage={error?.data?.error} />
+        {/* <ApiErrorAlert isError={isError} errorMessage={error?.data?.error} /> */}
         <Form
           name="basic"
           labelCol={{ span: 22 }}
           wrapperCol={{ span: 40 }}
           layout="vertical"
-          // initialValues={{
-          //   remember: true,
-          //   matchName: result?.matchName,
-          //   eventName: result?.eventDetails?.eventName,
-          // }}
           onFinish={handleUploadScore}
-          //   onFinishFailed={handleCompanyInformationFailed}
           autoComplete="off"
         >
-          <div className="w-[300px] ">
-            <img
-              src="https://img.freepik.com/free-vector/abstract-digital-shape-with-geometric-shapes_1017-32180.jpg?w=2000"
-              alt=""
-            />
+          <div className="w-[300px]">
+            {imagePreview ? (
+              <img src={imagePreview} alt="Preview" />
+            ) : (
+              <img
+                src="https://img.freepik.com/free-vector/abstract-digital-shape-with-geometric-shapes_1017-32180.jpg?w=2000"
+                alt="Placeholder"
+              />
+            )}
           </div>
           <div className="flex gap-5">
             <Form.Item
               name="serviceName"
               label={
-                <span className="text-textColor text-[18px] ">
+                <span className="text-textColor text-[18px]">
                   Screen Poster
                 </span>
               }
@@ -121,17 +117,9 @@ const UserScreenPoster = () => {
               ]}
             >
               <input
-                className="p-4 bg-primary
-            rounded w-full 
-            justify-start 
-            border-2 
-            border-secondary
-            mt-[12px]
-            items-center 
-            gap-4 inline-flex"
+                className="p-4 bg-primary rounded w-full justify-start border-2 border-secondary mt-[12px] items-center gap-4 inline-flex"
                 type="file"
                 onChange={handleFileChange}
-                // accept=".csv"
                 required
               />
             </Form.Item>
@@ -139,9 +127,7 @@ const UserScreenPoster = () => {
 
           <Button
             htmlType="submit"
-            // onClick={handleAddToBlog}
-            // block
-            className="block w-[500px] h-[56px] mt-[30px] px-2 py-4  text-white bg-secondary mx-auto"
+            className="block w-[500px] h-[56px] mt-[30px] px-2 py-4 text-white bg-secondary mx-auto"
           >
             Add Poster
           </Button>

@@ -16,111 +16,7 @@ const SalonOwner = () => {
     const { data, isLoading } = useGetAllUsersQuery(queryString,{
       refetchOnMountOrArgChange:true
     });
-  
-    const dataSource = [
-      {
-        key: '1',
-        email: 'ahad.aiman@gmail.com',
-        name:"Ahad",
-        phoneNumber:"0123456787",
-        age: 32,
-        address: "2715 Ash Dr. San Jose, South Dakota 83475",
-        date:"2022-12-12",
-        subscription:"Subscribed",
-  
-      },
-      {
-        key: '2',
-        email: 'ahad.aiman@gmail.com',
-        name:"Ahad",
-        phoneNumber:"0123456787",
-        age: 32,
-        address: "2715 Ash Dr. San Jose, South Dakota 83475",
-        date:"2022-12-12",
-        subscription:"Subscribed",
-      },
-      {
-        key: '3',
-        email: 'ahad.aiman@gmail.com',
-        name:"Ahad",
-        phoneNumber:"0123456787",
-        age: 32,
-        address: "2715 Ash Dr. San Jose, South Dakota 83475",
-        date:"2022-12-12",
-        subscription:"Subscribed",
-      },
-      {
-        key: '4',
-        email: 'ahad.aiman@gmail.com',
-        name:"Ahad",
-        phoneNumber:"0123456787",
-        age: 32,
-        address: "2715 Ash Dr. San Jose, South Dakota 83475",
-        date:"2022-12-12",
-        subscription:"Subscribed",
-      },
-      {
-        key: '5',
-        email: 'ahad.aiman@gmail.com',
-        name:"Ahad",
-        phoneNumber:"0123456787",
-        age: 32,
-        address: "2715 Ash Dr. San Jose, South Dakota 83475",
-        date:"2022-12-12",
-        subscription:"Subscribed",
-      },
-      {
-          key: '6',
-          email: 'ahad.aiman@gmail.com',
-        name:"Ahad",
-        phoneNumber:"0123456787",
-        age: 32,
-        address: "2715 Ash Dr. San Jose, South Dakota 83475",
-        date:"2022-12-12",
-        subscription:"Subscribed",
-        },
-        {
-          key: '7',
-          email: 'ahad.aiman@gmail.com',
-          name:"Ahad",
-          phoneNumber:"0123456787",
-          age: 32,
-          address: "2715 Ash Dr. San Jose, South Dakota 83475",
-          date:"2022-12-12",
-          subscription:"Subscribed",
-        },
-        {
-          key: '8',
-          email: 'ahad.aiman@gmail.com',
-          name:"Ahad",
-          phoneNumber:"0123456787",
-          age: 32,
-          address: "2715 Ash Dr. San Jose, South Dakota 83475",
-          date:"2022-12-12",
-          subscription:"Subscribed",
-        },
-        {
-          key: '9',
-          email: 'ahad.aiman@gmail.com',
-        name:"Ahad",
-        phoneNumber:"0123456787",
-        age: 32,
-        address: "2715 Ash Dr. San Jose, South Dakota 83475",
-        date:"2022-12-12",
-        subscription:"Subscribed",
-        },
-        {
-          key: '10',
-          email: 'ahad.aiman@gmail.com',
-        name:"Ahad",
-        phoneNumber:"0123456787",
-        age: 32,
-        address: "2715 Ash Dr. San Jose, South Dakota 83475",
-        date:"2022-12-12",
-        subscription:"Subscribed",
-        },
-    ];
-  
+    
     if(isLoading){
       return <Loading/>
     }
@@ -128,6 +24,7 @@ const SalonOwner = () => {
       
       navigate(`/reg-requests/requests-details/${id}`);
     };
+    console.log(data)
   
     const columns = [
       {

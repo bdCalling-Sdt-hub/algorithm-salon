@@ -32,7 +32,8 @@ const Login = () => {
 
         if (res.data) {
           localStorage.setItem("token", res.data?.data.token);
-          localStorage.setItem("userInfo", JSON.stringify(res.data?.data.user))
+          console.log(res.data)
+          localStorage.setItem("userInfo", JSON.stringify(res.data?.data?.payload.user))
           Swal.fire({
             position: "top-center",
             icon: "success",

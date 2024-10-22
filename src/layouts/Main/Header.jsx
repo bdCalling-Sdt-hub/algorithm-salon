@@ -10,8 +10,14 @@ const socket = io("http://192.168.10.11:8000");
 const Header = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
-  useEffect(()=>{
-    let user = JSON.parse(localStorage.getItem("userInfo"));
+  useEffect(() => {
+    let user = localStorage.getItem("userInfo");
+
+    if (!user) {
+      navigate("auth");
+    } else {
+      user = JSON.parse(user);
+    }
     socket.on(`notification::${user._id}`, (notification) => {
       setNotifications((prevNotifications) => [
         notification,
@@ -22,12 +28,12 @@ const Header = () => {
     return () => {
       socket.off(`notification::${user._id}`);
     };
-  })
+  }, []);
 
-const handleNotification=()=>{
-  setNotifications([])
-  navigate("notification")
-}
+  const handleNotification = () => {
+    setNotifications([]);
+    navigate("notification");
+  };
   return (
     <div className="flex justify-between items-center rounded-md mb-[24px] p-[16px] bg-primary">
       <div className="flex items-center gap-5">
@@ -46,9 +52,12 @@ const handleNotification=()=>{
         <div
           // onClick={(e) => navigate("notification")}
           className="relative flex items-center "
-          onClick={()=>handleNotification()}
+          onClick={() => handleNotification()}
         >
-          <Badge style={{ backgroundColor: "red" }} count={notifications.length}>
+          <Badge
+            style={{ backgroundColor: "red" }}
+            count={notifications.length}
+          >
             <IoIosNotificationsOutline
               style={{ cursor: "pointer" }}
               className={` bg-primary w-[52px] h-[52px] text-secondary border-2 border-secondary rounded-full p-2 `}
