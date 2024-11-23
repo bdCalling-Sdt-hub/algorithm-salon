@@ -6,7 +6,7 @@ import { FaRegUser } from "react-icons/fa6";
 import { MdMenu } from "react-icons/md";
 import { io } from "socket.io-client";
 // import SearchBox from "../SearchBox/SearchBox";
-const socket = io("http://192.168.10.11:8000");
+const socket = io(`${import.meta.env.VITE_IMAGE_BASE_URL}`);
 const Header = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);

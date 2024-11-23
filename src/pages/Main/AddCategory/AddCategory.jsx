@@ -150,33 +150,96 @@ const AddCategory = () => {
                   // gap-4 inline-flex focus:bg-primary hover:bg-primary focus:border-secondary hover:border-secondary"
                 />
               </Form.Item> */}
-            <Form.Item
-              name="packageName"
-              label={
-                <span className="text-textColor text-[18px] ">
-                  Package Name
-                </span>
-              }
-              className="flex-1"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Services Name!",
-                },
-              ]}
-            >
-              <Input
-                placeholder="Services name"
-                className="p-4 bg-primary
+            {/* <Form.Item
+        name="packageName"
+        label={<span className="text-textColor text-[18px] ">Package Name</span>}
+        className="flex-1"
+        rules={[
+          {
+            required: true,
+            message: "Please input your Services Name!",
+          },
+        ]}
+      >
+        <Select
+          placeholder="Services name"
+          className="p-4 
               rounded w-full 
-              justify-start 
-              border-2
-              border-secondary
-              mt-[12px]
+             
+              
               items-center 
-              gap-4 inline-flex focus:bg-primary hover:bg-primary focus:border-secondary hover:border-secondary"
-              />
-            </Form.Item>
+              gap-4 inline-flex "
+        >
+          <Select.Option value="Basic">Basic</Select.Option>
+          <Select.Option value="Standard">Standard</Select.Option>
+          <Select.Option value="Premium">Premium</Select.Option>
+          <Select.Option value="VIP">VIP</Select.Option>
+          <Select.Option value="Silver">Silver</Select.Option>
+          <Select.Option value="Gold">Gold</Select.Option>
+          <Select.Option value="Platinum">Platinum</Select.Option>
+          <Select.Option value="Diamond">Diamond</Select.Option>
+        </Select>
+      </Form.Item> */}
+       <Form.Item
+           label={
+            <span className="text-secondary text-[18px] ">
+              Package Name
+            </span>
+          }
+          name="packageName"
+              className="flex-1 rounded-sm"
+          rules={[
+            {
+              required: true,
+              message: "Please input hotspot available!",
+            },
+          ]}
+        >
+          <Select
+            placeholder="Basic"
+            size="large"
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            
+            options={[
+              {
+                value: "Basic",
+                label: "Basic",
+              },
+              {
+                value: "Standard",
+                label: "Standard",
+              },
+              {
+                value: "Premium",
+                label: "Premium",
+              },
+              {
+                value: "VIP",
+                label: "VIP",
+              },
+              {
+                value: "Silver",
+                label: "Silver",
+              },
+              {
+                value: "Gold",
+                label: "Gold",
+              },
+              {
+                value: "Platinum",
+                label: "Platinum",
+              },
+              {
+                value: "Diamond",
+                label: "Diamond",
+              },
+            ]}
+         className="mt-[12px] gap-4 "
+         style={{height:"58px" }}
+          />
+        </Form.Item>
             <Form.Item
               name="packageAmount"
               label={

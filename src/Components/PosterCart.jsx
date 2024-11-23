@@ -17,11 +17,11 @@ const PosterCart = ({ data }) => {
     };
  
   return (
-    <div className="bg-primary  rounded-lg w-[450px] p-5">
+    <div className="bg-primary  rounded-lg w-[450px] p-5 m-5">
         <ApiErrorAlert isError={isError} errorMessage={error?.error.message}/>
       <img
         className="w-[300px] mx-auto"
-        src={`http://192.168.10.11:8000/${data.imageUrl}`}
+        src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${data.imageUrl}`}
         alt=""
       />
       <p className="text-textColor text-[18px] text-center my-2 font-semibold">

@@ -22,8 +22,6 @@ const UpdatePassword = () => {
       email: email.slice(1, email.length),
       password: values.enter_password,
     };
-
-    console.log(values.enter_password);
     // Retrieve the token from local storage
     const forgetPasswordToken = localStorage.getItem("forgetPasswordToken");
 
@@ -40,14 +38,14 @@ const UpdatePassword = () => {
     try {
       // Send the request using fetch
       const response = await fetch(
-        "http://192.168.10.11:8000/api/v1/user/change-password",
+        `${import.meta.env.VITE_BASE_URL}/user/change-password`,
         requestOptions
       );
 
       // Check if the response is OK (status in the range 200-299)
       if (response.ok) {
         const data = await response.json();
-console.log(data)
+// console.log(data)
         Swal.fire({
           position: "top-center",
           icon: "success",

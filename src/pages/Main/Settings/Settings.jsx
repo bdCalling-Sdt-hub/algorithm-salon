@@ -99,53 +99,14 @@ const Settings = () => {
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    //   try {
-    //     const response = await baseURL.post(`/user/verify-code`, {
-    //       email: email,
-    //       code: otp,
-    //     },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         authentication: `Bearer ${localStorage.getItem("token")}`,
-    //       }
-    //     }
-
-    //   );
-
-    //     console.log(response.data);
-    //     const token = response?.data?.data?.token;
-    //     console.log(token);
-    //     if (response.data.statusCode == 200) {
-    //       localStorage.setItem("token", token);
-    //       localStorage.setItem("user", response?.data?.data?.attributes?.user);
-    //       Swal.fire({
-    //         position: "top-center",
-    //         icon: "success",
-    //         title: response.data.message,
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //       // navigate(`/set_new_password/${email}`);
-    //       setModelTitle("Reset Password");
-    //     }
-    //   } catch (error) {
-    //     console.log("Registration Fail", error?.response?.data?.message);
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Error...",
-    //       text: error?.response?.data?.message,
-    //       footer: '<a href="#">Why do I have this issue?</a>',
-    //     });
-    //   }
     setModelTitle("Reset Password");
   };
 
-  console.log(error)
+  // console.log(error)
   const handleResetPassword = async (values) => {
-    console.log(values, email);
+    // console.log(values, email);
     const data = { email: email, password: values?.password };
-    console.log(data);
+    // console.log(data);
     try {
       const response = await baseURL.post(`/user/set-password`, data, {
         headers: {
@@ -154,7 +115,6 @@ const Settings = () => {
         },
       });
 
-      console.log(response.data);
       if (response.data.statusCode == 200) {
         Swal.fire({
           position: "top-center",
@@ -166,7 +126,7 @@ const Settings = () => {
         setIsModalOpen(false);
       }
     } catch (error) {
-      console.log("Registration Fail", error?.response?.data?.message);
+      console.log("Registration Failed", error?.response?.data?.message);
       Swal.fire({
         icon: "error",
         title: "Error...",
@@ -177,7 +137,7 @@ const Settings = () => {
   };
 
   const handleForgetPassword = async (values) => {
-    console.log(values);
+    // console.log(values);
     try {
       const response = await baseURL.post(`/user/forgot-password`, values, {
         headers: {
@@ -185,7 +145,7 @@ const Settings = () => {
           authentication: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       Swal.fire({
         icon: "error",

@@ -19,14 +19,7 @@ const EditTermsAndCondition = () => {
     if(isLoading){
       return <Loading/>
     }
-    // const {data,isSuccess,isLoading} = useGetAboutUsQuery();
-    // const [content, setContent] = useState(data?.data?.attributes?.content);
-    // useEffect(()=>{
-    // setContent(data?.data?.attributes?.content);  
-    // },[data])
-    // console.log("data",data);
-  // console.log(content);
-  
+
     const handleUpdate = async ()=>{
       // console.log(content)
       let object={content:content}
@@ -53,41 +46,7 @@ const EditTermsAndCondition = () => {
                     timer: 1500,
         })
       }})
-   
-    //   try {
-    //     const response = await baseURL.put(`/setting/about-us`, {
-    //       content: content
-    //     },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         authentication: `Bearer ${localStorage.getItem("token")}`,
-    //       }
-    //     }
-    //     )
-    //     if(response?.data?.statusCode === 201){
-    //       Swal.fire({
-    //         position: "top-center",
-    //         icon: "success",
-    //         title: response?.data?.message,
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //       setInterval(()=>window.location.reload(),1600)
-    //       navigate("/settings/about-us")
-    //     }
-       
-       
-    //     console.log(response);
-    //   }catch(error){
-    //     console.log(error);
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Try Again...",
-    //       text: error?.response?.data?.message,
-    //       footer: '<a href="#">Why do I have this issue?</a>',
-    //     })
-    //   }
+
     }
     return (
         <div className="relative ml-[24px]">

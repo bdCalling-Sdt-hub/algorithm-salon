@@ -8,7 +8,7 @@ import ApiErrorAlert from "../../../utils/ApiErrorAlert";
 // import Loading from '../../../Components/Loading';
 
 // Setup the socket connection
-const socket = io("http://192.168.10.11:8000");
+const socket = io(`${import.meta.env.VITE_IMAGE_BASE_URL}`);
 
 const Notification = () => {
   const [queryString, setQueryString] = useState(`page=0&role=Admin&limit=10`);

@@ -27,7 +27,7 @@ const EditProfileInformation = () => {
 
   useEffect(() => {
     if (data && data.data?.profilePictureUrl) {
-      setImageUrl(`http://192.168.10.11:8000:8000/${data.data.profilePictureUrl}`);
+      setImageUrl(`${import.meta.env.VITE_IMAGE_BASE_URL}/${data.data.profilePictureUrl}`);
     }
   }, [data]);
 
@@ -61,7 +61,18 @@ const EditProfileInformation = () => {
           timer: 1500,
         });
       }
+      if(res.error){
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "update failed",
+          text: res.error.message || "Fail to Update",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }).catch (error=> {
+      console.log("Error is Here")
       Swal.fire({
         position: "top-center",
         icon: "error",
@@ -82,8 +93,7 @@ const EditProfileInformation = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        "http://192.168.10.11:8000/api/v1/user/profile-picture",
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/user/profile-picture`,
         {
           method: "POST",
           headers: {
@@ -114,7 +124,7 @@ const EditProfileInformation = () => {
       });
     }
   };
-
+console.log(data.data.contactNumber)
   return (
     <div>
       <div
@@ -152,7 +162,7 @@ const EditProfileInformation = () => {
                 </Form.Item>
               </div>
               <div className="flex flex-col justify-center items-center">
-                <p className="text-[20px]">{role?.toUpperCase()}</p>
+                {/* <p className="text-[20px]">{role?.toUpperCase()}</p> */}
                 <h1 className="text-[30px] font-medium">
                   {name?.toUpperCase()}
                 </h1>
@@ -210,7 +220,7 @@ const EditProfileInformation = () => {
                         message: "Please input your contact Number!",
                       },
                     ]}
-                    initialValue={profileId.contactNumber}
+                    initialValue={data.data.contactNumber | 123456}
                   >
                     <Input
                       placeholder="Phone number"

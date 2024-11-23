@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -104,20 +104,66 @@ const EditServices = () => {
           autoComplete="off"
         >
           <div className="flex gap-5">
-            <Form.Item
-              name="type"
-              label={
-                <span className="text-textColor text-[18px] ">
-                  Package Name
-                </span>
-              }
-              className="flex-1"
-            >
-              <Input
-                placeholder="Services name"
-                className="p-4 bg-primary rounded w-full border-2 border-secondary mt-[12px]"
-              />
-            </Form.Item>
+          <Form.Item
+           label={
+            <span className="text-secondary text-[18px] ">
+              Package Name
+            </span>
+          }
+          name="type"
+              className="flex-1 rounded-sm"
+          rules={[
+            {
+              required: true,
+              message: "Please input hotspot available!",
+            },
+          ]}
+        >
+          <Select
+            placeholder="Basic"
+            size="large"
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            
+            options={[
+              {
+                value: "Basic",
+                label: "Basic",
+              },
+              {
+                value: "Standard",
+                label: "Standard",
+              },
+              {
+                value: "Premium",
+                label: "Premium",
+              },
+              {
+                value: "VIP",
+                label: "VIP",
+              },
+              {
+                value: "Silver",
+                label: "Silver",
+              },
+              {
+                value: "Gold",
+                label: "Gold",
+              },
+              {
+                value: "Platinum",
+                label: "Platinum",
+              },
+              {
+                value: "Diamond",
+                label: "Diamond",
+              },
+            ]}
+         className="mt-[12px] gap-4 "
+         style={{height:"58px" }}
+          />
+        </Form.Item>
             <Form.Item
               name="amount"
               label={

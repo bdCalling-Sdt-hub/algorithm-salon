@@ -20,7 +20,7 @@ export const settingApi = baseApi.injectEndpoints({
     }),
       editPrivacyPolicy:builder.mutation({
         query: (data) => ({
-            url: `/privacy-policy/66c862784879e637e3a0c539`,
+            url: `/privacy-policy`,
             method: "PATCH",
             body:data
           }),
@@ -32,7 +32,7 @@ export const settingApi = baseApi.injectEndpoints({
     }),
     editTermsAndCondition:builder.mutation({
       query: (data) => ({
-          url: `/terms-and-conditions/66c86bad6514a8f27fbe0c5e`,
+          url: `/terms-and-conditions`,
           method: "PATCH",
           body:data
         }),
@@ -44,7 +44,7 @@ export const settingApi = baseApi.injectEndpoints({
   }),
   editGetAboutUs:builder.mutation({
     query: (data) => ({
-        url: `/about-us/66c8687ad915ac6991bcde9a`,
+        url: `/about-us`,
         method: "PATCH",
         body:data
       }),

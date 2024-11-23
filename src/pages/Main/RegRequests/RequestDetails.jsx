@@ -90,7 +90,7 @@ const RequestDetails = () => {
         {/* Image and Basic Info */}
         <div className="p-4">
           <img
-            src={`http://192.168.10.11:8000/${coverPhotoUrl?.publicUrl}`} // Replace with actual image URL
+            src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${coverPhotoUrl?.publicUrl}`} // Replace with actual image URL
             alt="Barber Shop"
             className="w-full h-48 object-cover rounded-lg mb-4"
           />

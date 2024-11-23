@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     localStorage.setItem("otpEmail", values.email);
     
     sendOtpToUserEmail(values).then((res) => {
-      console.log(res)
+      // console.log(res)
       if (res.data) {
         Swal.fire({
           position: "top-center",

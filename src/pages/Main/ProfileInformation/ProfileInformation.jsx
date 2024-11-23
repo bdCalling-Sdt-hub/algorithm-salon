@@ -26,7 +26,7 @@ const ProfileInformation = () => {
   if(isLoading){
     return <Loading/>
   }
-  const {_id='',name='',email="",role="",profilePictureUrl="",profileId={}}=data?.data
+  const {_id='',name='',email="",role="",profilePictureUrl="",contactNumber}=data?.data
     return (
         <div>
       <div className="flex justify-between items-center ml-[24px] mt-[40px] mb-[63px]">
@@ -50,11 +50,11 @@ const ProfileInformation = () => {
           <img
             className="w-[242px] h-[242px] rounded-full"
             // src={`${import.meta.env.VITE_BASE_URL}${currentUser?.image?.publicFileURL}`}
-            src={`http://192.168.10.11:8000/${profilePictureUrl}`}
+            src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${profilePictureUrl}`}
             alt=""
           />
           <div className="flex flex-col justify-center items-center">
-            <p className="text-[20px] ">{role?.toUpperCase() || "Admin"}</p>
+            {/* <p className="text-[20px] ">{role?.toUpperCase() || "Admin"}</p> */}
             <h1 className="text-[30px] font-medium">
              {name?.toUpperCase() || ""}
             </h1>
@@ -124,7 +124,7 @@ const ProfileInformation = () => {
               <Input
             
                 placeholder="Phone"
-                value={profileId?.contactNumber || "Not Provided"}
+                value={contactNumber || "Not Provided"}
                 className="p-4 bg-primary
                 rounded w-full 
                 justify-start 
