@@ -8,3 +8,11 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 # serviceBd-dashboard
 # algorithm-salon
+
+### Environment File :
+
+```bash
+VITE_BASE_URL = https://hairkonnect.com/api/v1
+VITE_IMAGE_BASE_URL = https://hairkonnect.com
+# IP_BASE_URL={import.meta.env.VITE_IMAGE_BASE_URL}:8000
+```
