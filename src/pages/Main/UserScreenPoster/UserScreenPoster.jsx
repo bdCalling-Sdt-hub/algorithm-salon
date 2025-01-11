@@ -21,7 +21,7 @@ const UserScreenPoster = () => {
     try {
       let token = localStorage.getItem("token");
       // Make the fetch request
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/poster`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/poster`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`, // Include the Bearer token

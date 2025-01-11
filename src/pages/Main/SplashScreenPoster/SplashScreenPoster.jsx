@@ -16,20 +16,7 @@ const SplashScreenPoster = () => {
   if(isLoading){
     return <Loading/>
   }
-  const service = [
-    {
-      id: 1,
-      name: "Total Pool Cleaning",
-    },
-    {
-      id: 2,
-      name: "Total Pool Cleaning",
-    },
-    {
-      id: 3,
-      name: "Total Spa",
-    },
-  ];
+  
   return (
     <div>
       <div className="flex justify-between items-center">
